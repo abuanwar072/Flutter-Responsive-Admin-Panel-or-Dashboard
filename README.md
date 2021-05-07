@@ -1,7 +1,7 @@
 # Responsive Admin Panel or Dashboard - Flutter UI
 
 ## [Watch it on YouTube](https://youtu.be/_uOgXpEHNbc)
-## [Live Preview] (https://abuanwar072.github.io/Flutter-Responsive-Admin-Panel-or-Dashboard/#/)
+## [Live Preview](https://abuanwar072.github.io/Flutter-Responsive-Admin-Panel-or-Dashboard/#/)
 
 **Packages we are using:**
 
