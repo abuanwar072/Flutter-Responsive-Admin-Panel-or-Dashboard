@@ -9,9 +9,7 @@ class SideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: SingleChildScrollView(
-        // it enables scrolling
-        child: Column(
+      child: ListView(
           children: [
             DrawerHeader(
               child: Image.asset("assets/images/logo.png"),
@@ -57,7 +55,6 @@ class SideMenu extends StatelessWidget {
               press: () {},
             ),
           ],
-        ),
       ),
     );
   }
