@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import 'file_info_card.dart';
 
-class MyFiels extends StatelessWidget {
-  const MyFiels({
+class MyFiles extends StatelessWidget {
+  const MyFiles({
     Key key,
   }) : super(key: key);
 
