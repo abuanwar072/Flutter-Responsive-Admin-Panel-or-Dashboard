@@ -7,7 +7,7 @@ import 'file_info_card.dart';
 
 class MyFiels extends StatelessWidget {
   const MyFiels({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -54,7 +54,7 @@ class MyFiels extends StatelessWidget {
 
 class FileInfoCardGridView extends StatelessWidget {
   const FileInfoCardGridView({
-    Key key,
+    Key? key,
     this.crossAxisCount = 4,
     this.childAspectRatio = 1,
   }) : super(key: key);

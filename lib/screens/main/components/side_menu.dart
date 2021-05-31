@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -65,11 +65,11 @@ class SideMenu extends StatelessWidget {
 
 class DrawerListTile extends StatelessWidget {
   const DrawerListTile({
-    Key key,
+    Key? key,
     // For selecting those three line once press "Command+D"
-    @required this.title,
-    @required this.svgSrc,
-    @required this.press,
+    required this.title,
+    required this.svgSrc,
+    required this.press,
   }) : super(key: key);
 
   final String title, svgSrc;
