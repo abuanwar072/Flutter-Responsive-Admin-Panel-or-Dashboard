@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import 'file_info_card.dart';
 
-class MyFiels extends StatelessWidget {
-  const MyFiels({
+class MyFiles extends StatelessWidget {
+  const MyFiles({
     Key? key,
   }) : super(key: key);
 
@@ -67,14 +67,14 @@ class FileInfoCardGridView extends StatelessWidget {
     return GridView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: demoMyFiels.length,
+      itemCount: demoMyFiles.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: defaultPadding,
         mainAxisSpacing: defaultPadding,
         childAspectRatio: childAspectRatio,
       ),
-      itemBuilder: (context, index) => FileInfoCard(info: demoMyFiels[index]),
+      itemBuilder: (context, index) => FileInfoCard(info: demoMyFiles[index]),
     );
   }
 }
