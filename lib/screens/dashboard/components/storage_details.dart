@@ -6,7 +6,7 @@ import 'storage_info_card.dart';
 
 class StarageDetails extends StatelessWidget {
   const StarageDetails({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

@@ -5,11 +5,11 @@ import '../../../constants.dart';
 
 class StorageInfoCard extends StatelessWidget {
   const StorageInfoCard({
-    Key key,
-    @required this.title,
-    @required this.svgSrc,
-    @required this.amountOfFiles,
-    @required this.numOfFiles,
+    Key? key,
+    required this.title,
+    required this.svgSrc,
+    required this.amountOfFiles,
+    required this.numOfFiles,
   }) : super(key: key);
 
   final String title, svgSrc, amountOfFiles;
@@ -48,7 +48,7 @@ class StorageInfoCard extends StatelessWidget {
                     "$numOfFiles Files",
                     style: Theme.of(context)
                         .textTheme
-                        .caption
+                        .caption!
                         .copyWith(color: Colors.white70),
                   ),
                 ],
