@@ -57,6 +57,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  data_table_2:
+    dependency: "direct main"
+    description:
+      name: data_table_2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.3"
   equatable:
     dependency: transitive
     description:
