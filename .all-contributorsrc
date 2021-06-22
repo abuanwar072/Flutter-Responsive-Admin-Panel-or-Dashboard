@@ -13,6 +13,16 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "ajumalp",
+      "name": "Ajmal Muhammad P",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12585082?v=4",
+      "profile": "https://owner.erratums.com",
+      "contributions": [
+        "bug",
+        "platform"
+      ]
     }
   ],
   "contributorsPerLine": 7,
