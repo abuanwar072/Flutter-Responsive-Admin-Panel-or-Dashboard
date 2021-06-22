@@ -1,6 +1,6 @@
 # Responsive Admin Panel or Dashboard - Flutter UI
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## [Live Preview](https://abuanwar072.github.io/Flutter-Responsive-Admin-Panel-or-Dashboard/#/)
@@ -36,6 +36,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/simon1tan"><img src="https://avatars.githubusercontent.com/u/1250858?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Simon Tan</b></sub></a><br /><a href="https://github.com/abuanwar072/Flutter-Responsive-Admin-Panel-or-Dashboard/issues?q=author%3Asimon1tan" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="http://ertugrulgaziakca.com"><img src="https://avatars.githubusercontent.com/u/26525468?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ertuğrul AKÇA</b></sub></a><br /><a href="https://github.com/abuanwar072/Flutter-Responsive-Admin-Panel-or-Dashboard/issues?q=author%3Aakcauser" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
