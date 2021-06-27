@@ -37,7 +37,7 @@ List demoRecentFiles = [
   ),
   RecentFile(
     icon: "assets/icons/pdf_file.svg",
-    title: "Sals PDF",
+    title: "Sales PDF",
     date: "25-02-2021",
     size: "3.5mb",
   ),
