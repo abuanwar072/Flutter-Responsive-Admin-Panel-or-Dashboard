@@ -19,7 +19,7 @@ List demoRecentFiles = [
   ),
   RecentFile(
     icon: "assets/icons/doc_file.svg",
-    title: "Documetns",
+    title: "Documents",
     date: "23-02-2021",
     size: "32.5mb",
   ),
