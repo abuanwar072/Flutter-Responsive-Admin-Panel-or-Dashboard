@@ -12,7 +12,7 @@ class UserSideMenu extends StatelessWidget {
       child: ListView(
         children: [
           DrawerHeader(
-            child: Image.asset("images/ic_logo.png"),
+            child: Image.asset("assets/images/ic_logo.png"),
           ),
           DrawerListTile(
             title: "Panel de Control",
@@ -40,6 +40,11 @@ class UserSideMenu extends StatelessWidget {
             press: () {},
           ),
           DrawerListTile(
+            title: "Referidos",
+            svgSrc: "assets/icons/menu_store.svg",
+            press: () {},
+          ),
+          DrawerListTile(
             title: "Mi Perfil",
             svgSrc: "assets/icons/menu_profile.svg",
             press: () {},
@@ -47,6 +52,11 @@ class UserSideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Ajustes",
             svgSrc: "assets/icons/menu_setting.svg",
+            press: () {},
+          ),
+          DrawerListTile(
+            title: "Terminos y condiciones",
+            svgSrc: "assets/icons/menu_store.svg",
             press: () {},
           ),
         ],

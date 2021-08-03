@@ -1,5 +1,6 @@
 import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/screens/main/login2_screen.dart';
 import 'package:admin/screens/main/login_screen.dart';
 import 'package:admin/screens/main/user_screen.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
           ),
         ],
         //child: UserScreen(),
-        child: LoginPage(),
+        child: LoginPage2(),
       ),
     );
   }

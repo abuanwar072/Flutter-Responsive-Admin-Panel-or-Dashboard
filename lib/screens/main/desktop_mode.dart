@@ -35,7 +35,7 @@ class _DesktopModeState extends State<DesktopMode> {
                                   color: secondaryColor,
                                   child: Align(
                                     alignment: Alignment.center,
-                                    child: Image.asset('images/ic_login.png', height: heightSize * 0.9, width: widthSize *0.9, semanticLabel: 'test'),
+                                    child: Image.asset('assets/images/ic_login.png', height: heightSize * 0.9, width: widthSize *0.9, semanticLabel: 'test'),
                                   )
                               )
                           ),

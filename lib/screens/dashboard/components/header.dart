@@ -16,10 +16,10 @@ class Header extends StatelessWidget {
     return Row(
       children: [
         if (!Responsive.isDesktop(context))
-          IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: context.read<MenuController>().controlMenu,
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.menu),
+          //   onPressed: context.read<MenuController>().controlMenu,
+          // ),
         if (!Responsive.isMobile(context))
           Text(
             "Resumen",
