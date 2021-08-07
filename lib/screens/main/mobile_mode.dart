@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
 import 'components/login_form.dart';
 
 class MobileMode extends StatefulWidget {
@@ -16,13 +17,7 @@ class _MobileModeState extends State<MobileMode> {
     return Scaffold(
         body: SafeArea(
             child: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [Color.fromRGBO(66, 105, 255, 1), Color.fromRGBO(66, 205, 255, 1)]
-                    )
-                ),
+                color: bgColor,
                 child: Column(
                     children: [
                       Image.asset('assets/images/ic_logo.png', height: heightSize * 0.3, width: widthSize * 0.6),
