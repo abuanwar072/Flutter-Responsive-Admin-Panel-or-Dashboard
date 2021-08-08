@@ -139,7 +139,8 @@ class Body extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return SingleChildScrollView(
+    child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
@@ -213,6 +214,7 @@ class Body extends StatelessWidget {
           ),
         )
       ],
+    )
     );
   }
 
