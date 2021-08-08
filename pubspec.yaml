@@ -33,6 +33,8 @@ dependencies:
   fl_chart: ^0.36.1
   provider: ^5.0.0
   data_table_2: ^2.0.3
+  whatsapp_unilink: ^2.0.0
+  url_launcher: ^6.0.9
 
 dev_dependencies:
   flutter_test:

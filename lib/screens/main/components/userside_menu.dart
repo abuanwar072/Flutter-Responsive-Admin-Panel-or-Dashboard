@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class SideMenu extends StatelessWidget {
-  const SideMenu({
+class UserSideMenu extends StatelessWidget {
+  const UserSideMenu({
     Key? key,
   }) : super(key: key);
 
@@ -15,43 +15,48 @@ class SideMenu extends StatelessWidget {
             child: Image.asset("assets/images/ic_logo.png"),
           ),
           DrawerListTile(
-            title: "Dashboard",
+            title: "Panel de Control",
             svgSrc: "assets/icons/menu_dashbord.svg",
             press: () {},
           ),
           DrawerListTile(
-            title: "Transaction",
+            title: "Billetera",
             svgSrc: "assets/icons/menu_tran.svg",
             press: () {},
           ),
           DrawerListTile(
-            title: "Task",
+            title: "Enlaces",
             svgSrc: "assets/icons/menu_task.svg",
             press: () {},
           ),
           DrawerListTile(
-            title: "Documents",
+            title: "Resumen",
             svgSrc: "assets/icons/menu_doc.svg",
             press: () {},
           ),
           DrawerListTile(
-            title: "Store",
+            title: "Ranking",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {},
           ),
           DrawerListTile(
-            title: "Notification",
-            svgSrc: "assets/icons/menu_notification.svg",
+            title: "Referidos",
+            svgSrc: "assets/icons/menu_store.svg",
             press: () {},
           ),
           DrawerListTile(
-            title: "Profile",
+            title: "Mi Perfil",
             svgSrc: "assets/icons/menu_profile.svg",
             press: () {},
           ),
           DrawerListTile(
-            title: "Settings",
+            title: "Ajustes",
             svgSrc: "assets/icons/menu_setting.svg",
+            press: () {},
+          ),
+          DrawerListTile(
+            title: "Terminos y condiciones",
+            svgSrc: "assets/icons/menu_store.svg",
             press: () {},
           ),
         ],

@@ -48,29 +48,18 @@ class FileInfoCard extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
+          Text(
+            info.totalStorage!,
+            style: Theme.of(context)
+                .textTheme
+                .caption!
+                .copyWith(color: Colors.white),
+          ),
           ProgressLine(
             color: info.color,
             percentage: info.percentage,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "${info.numOfFiles} Files",
-                style: Theme.of(context)
-                    .textTheme
-                    .caption!
-                    .copyWith(color: Colors.white70),
-              ),
-              Text(
-                info.totalStorage!,
-                style: Theme.of(context)
-                    .textTheme
-                    .caption!
-                    .copyWith(color: Colors.white),
-              ),
-            ],
-          )
+
         ],
       ),
     );
