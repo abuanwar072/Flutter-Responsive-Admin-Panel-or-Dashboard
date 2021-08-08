@@ -2,6 +2,8 @@ import 'package:admin/screens/main/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
 import '../../constants.dart';
 import '../../constants.dart';
@@ -149,7 +151,7 @@ class Body extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Bienvenido a \nMi acortador de link',
+                'Bienvenido a \nNewsClub',
                 style: TextStyle(
                   fontSize: 45,
                   fontWeight: FontWeight.bold,
@@ -282,8 +284,11 @@ class Body extends StatelessWidget {
                 height: 50,
                 child: Center(child: Text("Iniciar sesión"))),
             onPressed: (){
-
-              if((_usernameController.text =="admin") &&(_passwordController.text =="admin")){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UserScreen()),
+              );
+             /* if((_usernameController.text =="admin") &&(_passwordController.text =="admin")){
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => UserScreen()),
@@ -310,7 +315,7 @@ class Body extends StatelessWidget {
                     );
                   },
                 );
-              }
+              }*/
             },
             style: ElevatedButton.styleFrom(
               primary: primaryColor,
@@ -347,7 +352,7 @@ class Body extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 child: Center(child: Text("Contactar a los administradores"))),
-            onPressed: () => print("it's pressed"),
+            onPressed: () => launchWhatsApp(),
             style: ElevatedButton.styleFrom(
               primary: primaryColor,
               onPrimary: Colors.white,
@@ -409,5 +414,17 @@ class Body extends StatelessWidget {
             ),
           )),
     );
+  }
+
+
+  launchWhatsApp() async {
+    final link = WhatsAppUnilink(
+      phoneNumber: '+5355225042',
+      text: "Hey! I'm inquiring about the apartment listing",
+    );
+    // Convert the WhatsAppUnilink instance to a string.
+    // Use either Dart's string interpolation or the toString() method.
+    // The "launch" method is part of "url_launcher".
+    await launch('$link');
   }
 }

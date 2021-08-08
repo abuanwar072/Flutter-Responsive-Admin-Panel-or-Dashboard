@@ -1,6 +1,7 @@
 import 'package:admin/screens/main/user_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:whatsapp_unilink/whatsapp_unilink.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../constants.dart';
 import 'components/login_form.dart';
 
@@ -184,7 +185,9 @@ class _MobileModeState extends State<MobileMode> {
                 width: double.infinity,
                 height: 50,
                 child: Center(child: Text("Contactar a los administradores"))),
-            onPressed: () => print("it's pressed"),
+            onPressed: () => {
+              launchWhatsApp()
+            },
             style: ElevatedButton.styleFrom(
               primary: primaryColor,
               onPrimary: Colors.white,
@@ -205,5 +208,16 @@ class _MobileModeState extends State<MobileMode> {
 
 
     );
+  }
+
+  launchWhatsApp() async {
+    final link = WhatsAppUnilink(
+      phoneNumber: '+5355225042',
+      text: "Hey! I'm inquiring about the apartment listing",
+    );
+    // Convert the WhatsAppUnilink instance to a string.
+    // Use either Dart's string interpolation or the toString() method.
+    // The "launch" method is part of "url_launcher".
+    await launch('$link');
   }
 }

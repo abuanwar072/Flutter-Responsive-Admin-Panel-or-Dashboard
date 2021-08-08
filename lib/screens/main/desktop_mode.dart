@@ -48,7 +48,7 @@ class _DesktopModeState extends State<DesktopMode> {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          "URL Shorterer Los Gonzalez",
+                                          "NewsClub",
                                           style: Theme.of(context).textTheme.headline6,
                                         ),
                                         SizedBox(height: 50),
