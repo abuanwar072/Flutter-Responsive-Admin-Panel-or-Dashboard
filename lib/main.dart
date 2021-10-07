@@ -1,12 +1,19 @@
 import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/screens/main/main_screen.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -22,6 +29,8 @@ class MyApp extends StatelessWidget {
             .apply(bodyColor: Colors.white),
         canvasColor: secondaryColor,
       ),
+      locale: DevicePreview.locale(context), // Add the locale here
+      builder: DevicePreview.appBuilder, // Add the builder here
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(
