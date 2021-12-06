@@ -33,6 +33,7 @@ dependencies:
   fl_chart: ^0.40.5
   provider: ^6.0.1
   data_table_2: ^2.0.3
+  adaptive_theme: ^2.3.0
 
 dev_dependencies:
   flutter_test:
