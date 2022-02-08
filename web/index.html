@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -24,12 +25,33 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
   <title>admin</title>
   <link rel="manifest" href="manifest.json">
+  <!-- Styling for loading indicator -->
+  <style>
+    .container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #212332;
+    }
+
+    .indicator {
+      width: 10vw;
+    }
+  </style>
+
 </head>
-<body>
+
+<body style="overflow: hidden">
+  <!-- Loading Indicator -->
+  <div id="loading_container" class="container">
+    <img src="./assets/loading.gif" alt="loading indicator" class="indicator">
+  </div>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
@@ -41,5 +63,17 @@
     }
   </script>
   <script src="main.dart.js" type="application/javascript"></script>
+  <!-- Removes the loading indicator after 10 seconds -->
+  <script>
+    window.onload = function () {
+      setTimeout(function () {
+        var loadingIndicator = document.getElementById("loading_container");
+        if (loadingIndicator) {
+          loadingIndicator.remove();
+        }
+      }, 10000)
+    }
+  </script>
 </body>
+
 </html>
