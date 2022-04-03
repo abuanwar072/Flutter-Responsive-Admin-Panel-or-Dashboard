@@ -9,7 +9,10 @@ import '../../../constants.dart';
 class Header extends StatelessWidget {
   const Header({
     Key? key,
+    required this.route,
   }) : super(key: key);
+
+  final String route;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +25,15 @@ class Header extends StatelessWidget {
           ),
         if (!Responsive.isMobile(context))
           Text(
-            "Dashboard",
+            route,
             style: Theme.of(context).textTheme.headline6,
           ),
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
-        Expanded(child: SearchField()),
-        ProfileCard()
+        if(route == "users")
+        Expanded(child:
+         SearchField(route: route,)),
+        //ProfileCard()
       ],
     );
   }
@@ -74,10 +79,15 @@ class ProfileCard extends StatelessWidget {
 class SearchField extends StatelessWidget {
   const SearchField({
     Key? key,
+
+    required this.route,
   }) : super(key: key);
+
+  final route;
 
   @override
   Widget build(BuildContext context) {
+
     return TextField(
       decoration: InputDecoration(
         hintText: "Search",

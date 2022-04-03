@@ -5,8 +5,8 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../constants.dart';
 
-class RecentFiles extends StatelessWidget {
-  const RecentFiles({
+class UserTable extends StatelessWidget {
+  const UserTable({
     Key? key,
   }) : super(key: key);
 

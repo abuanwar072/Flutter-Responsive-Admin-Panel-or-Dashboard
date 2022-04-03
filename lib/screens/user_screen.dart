@@ -3,11 +3,14 @@ import 'package:admin/screens/dashboard/components/my_fields.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import 'components/header.dart';
+import 'package:admin/screens/dashboard/components/header.dart';
 
-import 'components/storage_details.dart';
+import 'package:admin/screens/dashboard/components/recent_files.dart';
+import 'package:admin/screens/dashboard/components/storage_details.dart';
 
-class DashboardScreen extends StatelessWidget {
+import 'dashboard/components/user_table.dart';
+
+class UserScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -15,7 +18,7 @@ class DashboardScreen extends StatelessWidget {
         padding: EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
-           Header(route: "dashboard"),
+            Header(route: "users",),
             SizedBox(height: defaultPadding),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,23 +27,12 @@ class DashboardScreen extends StatelessWidget {
                   flex: 5,
                   child: Column(
                     children: [
-                      MyFiles(),
+                     // MyFiles(),
                       SizedBox(height: defaultPadding),
-                      //RecentFiles(),
-                      /*  if (Responsive.isMobile(context))
-                        SizedBox(height: defaultPadding),
-                      if (Responsive.isMobile(context)) StarageDetails(),*/
+                      UserTable(),
                     ],
                   ),
                 ),
-                /*if (!Responsive.isMobile(context))
-                  SizedBox(width: defaultPadding),
-                // On Mobile means if the screen is less than 850 we dont want to show it
-                if (!Responsive.isMobile(context))
-                  Expanded(
-                    flex: 2,
-                    child: StarageDetails(),
-                  ),*/
               ],
             )
           ],

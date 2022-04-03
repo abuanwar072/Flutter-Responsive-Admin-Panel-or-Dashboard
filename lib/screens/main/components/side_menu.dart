@@ -1,5 +1,9 @@
+import 'package:admin/models/events/NavigationScreen.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
+
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -16,44 +20,29 @@ class SideMenu extends StatelessWidget {
           ),
           DrawerListTile(
             title: "Dashboard",
-            svgSrc: "assets/icons/menu_dashbord.svg",
-            press: () {},
+            svgSrc: "assets/images/logo-vertical.svg",
+            press: () {
+              String route = "dashboard";
+              GetIt.I.get<EventBus>().fire(NavigationScreen(routeName: route));
+            },
           ),
           DrawerListTile(
-            title: "Transaction",
-            svgSrc: "assets/icons/menu_tran.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Task",
-            svgSrc: "assets/icons/menu_task.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Documents",
-            svgSrc: "assets/icons/menu_doc.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Store",
-            svgSrc: "assets/icons/menu_store.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Notification",
-            svgSrc: "assets/icons/menu_notification.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Profile",
+            title: "Usuarios",
             svgSrc: "assets/icons/menu_profile.svg",
-            press: () {},
+            press: () {
+              String route = "users";
+              GetIt.I.get<EventBus>().fire(NavigationScreen(routeName: route));
+            },
           ),
           DrawerListTile(
-            title: "Settings",
-            svgSrc: "assets/icons/menu_setting.svg",
-            press: () {},
+            title: "Traps",
+            svgSrc: "assets/icons/menu_tran.svg",
+            press: () {
+              String route = "devices";
+              GetIt.I.get<EventBus>().fire(NavigationScreen(routeName: route));
+            },
           ),
+
         ],
       ),
     );
