@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:yupcity_admin/constants.dart';
 import 'package:yupcity_admin/controllers/MenuController.dart';
 import 'package:yupcity_admin/screens/login_page.dart';
@@ -13,10 +14,14 @@ import 'package:yupcity_admin/services/navigator_service.dart';
 
 import 'services/http_client.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupLocator();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+       runApp(MyApp());
+  });
 
-  setupLocator();
 }
 
 class MyApp extends StatelessWidget {
