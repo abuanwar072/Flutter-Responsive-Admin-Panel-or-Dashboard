@@ -1,14 +1,14 @@
-import 'package:admin/responsive.dart';
-import 'package:admin/screens/dashboard/add_new_trap.dart';
-import 'package:admin/screens/dashboard/components/devices_table.dart';
-import 'package:admin/screens/dashboard/components/my_fields.dart';
+import 'package:yupcity_admin/responsive.dart';
+import 'package:yupcity_admin/screens/dashboard/add_new_trap.dart';
+import 'package:yupcity_admin/screens/dashboard/components/devices_table.dart';
+import 'package:yupcity_admin/screens/dashboard/components/my_fields.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import 'package:admin/screens/dashboard/components/header.dart';
+import 'package:yupcity_admin/screens/dashboard/components/header.dart';
 
-import 'package:admin/screens/dashboard/components/recent_files.dart';
-import 'package:admin/screens/dashboard/components/storage_details.dart';
+import 'package:yupcity_admin/screens/dashboard/components/recent_files.dart';
+import 'package:yupcity_admin/screens/dashboard/components/storage_details.dart';
 
 import 'dashboard/components/user_table.dart';
 

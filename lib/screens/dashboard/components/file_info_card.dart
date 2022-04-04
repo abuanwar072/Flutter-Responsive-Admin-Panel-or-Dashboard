@@ -1,5 +1,5 @@
-import 'package:admin/models/MyFiles.dart';
-import 'package:admin/models/events/NavigationScreen.dart';
+import 'package:yupcity_admin/models/MyFiles.dart';
+import 'package:yupcity_admin/models/events/NavigationScreen.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

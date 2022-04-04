@@ -1,4 +1,4 @@
-import 'package:admin/constants.dart';
+import 'package:yupcity_admin/constants.dart';
 import 'package:flutter/material.dart';
 
 class CloudStorageInfo {

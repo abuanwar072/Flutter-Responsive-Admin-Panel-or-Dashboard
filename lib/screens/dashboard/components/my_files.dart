@@ -1,7 +1,7 @@
 
-import 'package:admin/responsive.dart';
+import 'package:yupcity_admin/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:admin/models/MyFiles.dart';
+import 'package:yupcity_admin/models/MyFiles.dart';
 import '../../../constants.dart';
 import 'file_info_card.dart';
 

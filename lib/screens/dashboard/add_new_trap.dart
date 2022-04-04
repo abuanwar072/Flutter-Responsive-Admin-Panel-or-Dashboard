@@ -1,14 +1,8 @@
 import 'dart:async';
 
-
-import 'package:event_bus/event_bus.dart';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:get_it/get_it.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';

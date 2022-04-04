@@ -1,9 +1,9 @@
-import 'package:admin/controllers/MenuController.dart';
-import 'package:admin/models/events/NavigationScreen.dart';
-import 'package:admin/responsive.dart';
-import 'package:admin/screens/dashboard/dashboard_screen.dart';
-import 'package:admin/screens/devices_screen.dart';
-import 'package:admin/screens/user_screen.dart';
+import 'package:yupcity_admin/controllers/MenuController.dart';
+import 'package:yupcity_admin/models/events/NavigationScreen.dart';
+import 'package:yupcity_admin/responsive.dart';
+import 'package:yupcity_admin/screens/dashboard/dashboard_screen.dart';
+import 'package:yupcity_admin/screens/devices_screen.dart';
+import 'package:yupcity_admin/screens/user_screen.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

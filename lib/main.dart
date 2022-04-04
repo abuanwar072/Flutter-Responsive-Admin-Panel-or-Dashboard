@@ -1,6 +1,6 @@
-import 'package:admin/constants.dart';
-import 'package:admin/controllers/MenuController.dart';
-import 'package:admin/screens/main/main_screen.dart';
+import 'package:yupcity_admin/constants.dart';
+import 'package:yupcity_admin/controllers/MenuController.dart';
+import 'package:yupcity_admin/screens/main/main_screen.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
