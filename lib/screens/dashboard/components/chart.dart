@@ -29,11 +29,10 @@ class Chart extends StatelessWidget {
                 SizedBox(height: defaultPadding),
                 Text(
                   "29.1",
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        height: 0.5,
-                      ),
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30
+                  ),
                 ),
                 Text("of 128GB")
               ],
