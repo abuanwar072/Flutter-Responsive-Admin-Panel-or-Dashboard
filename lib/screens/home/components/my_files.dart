@@ -1,7 +1,7 @@
-
+import 'package:admin/models/MyFiles.dart';
 import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:admin/models/MyFiles.dart';
+
 import '../../../constants.dart';
 import 'file_info_card.dart';
 
@@ -24,6 +24,7 @@ class MyFiles extends StatelessWidget {
             ),
             ElevatedButton.icon(
               style: TextButton.styleFrom(
+                backgroundColor: primaryColor,
                 padding: EdgeInsets.symmetric(
                   horizontal: defaultPadding * 1.5,
                   vertical:

@@ -18,21 +18,21 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.17.0 <3.0.0'
 
 dependencies:
+  bloc: ^8.0.3
+  cupertino_icons: ^1.0.4
+  data_table_2: ^2.0.3
+  easy_localization: ^3.0.1
+  equatable: ^2.0.3
+  fl_chart: ^0.50.6
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.3
-
-  google_fonts: ^2.1.0
-  flutter_svg: ^0.22.0
-  fl_chart: ^0.36.1
-  provider: ^5.0.0
-  data_table_2: ^2.0.3
+  flutter_bloc: ^8.0.1
+  flutter_svg: ^1.0.3
+  google_fonts: ^3.0.0
+  provider: ^6.0.2
 
 dev_dependencies:
   flutter_test:
@@ -40,7 +40,6 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
   # The following line ensures that the Material Icons font is
@@ -52,14 +51,12 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/translations/
   #   - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
