@@ -1,35 +1,68 @@
 {
-    "home": "Home",
-    "employees": "Employees",
-    "person_with_special_needs": "Persons with Special Needs",
-    "donation": "Donation",
-    "volunteer": "Volunteer",
-    "sponsorships": "Sponsorships",
-    "notifications": "Notifications",
-    "settings": "Settings",
-    "search": "Search",
-    "charity_name": "Ataa Charitable Organization\nfor persons with special needs",
-    "donation_details": "Donation Details",
-    "medical": "Medical Donations",
-    "educational": "Educational Donations",
-    "entertainment": "Entertainment Donations",
-    "other": "Other",
-    "donator": {
-        "zero": "{} Donator",
-        "one": "Donator",
-        "many": "{} Donators",
-        "other": "{} Donators"
-    },
-    "amount": {
-        "zero": "{} millon sp",
-        "one": "One million sp",
-        "many": "{} millions sp",
-        "other": "{} millions sp"
-    },
-    "total": {
-        "zero": "millon sp",
-        "one": "million sp",
-        "many": "millions sp",
-        "other": "millions sp"
-    }
+  "home": "Home",
+  "employees": "Employees",
+  "person_with_special_needs": "Persons with Special Needs",
+  "donation": "Donation",
+  "volunteer": "Volunteer",
+  "sponsorships": "Sponsorships",
+  "notifications": "Notifications",
+  "settings": "Settings",
+  "search": "Search",
+  "charity_name": "Ataa Charitable Organization\nfor persons with special needs",
+  "donation_details": "Donation Details",
+  "medical": "Medical Donations",
+  "educational": "Educational Donations",
+  "entertainment": "Entertainment Donations",
+  "other": "Other",
+  "donator": {
+    "zero": "{} Donator",
+    "one": "Donator",
+    "many": "{} Donators",
+    "other": "{} Donators"
+  },
+  "volunteer_person": {
+    "zero": "No Volunteers",
+    "one": "One Volunteer",
+    "two": "{} Volunteers",
+    "few": "{} Volunteers",
+    "many": "{} Volunteers",
+    "other": "{} Volunteers"
+  },
+  "specializations": {
+    "zero": "No Specializations",
+    "one": "One Specialization",
+    "two": "{} Specializations",
+    "few": "{} Specializations",
+    "many": "{} Specializations",
+    "other": "{} Specializations"
+  },
+  "amount": {
+    "zero": "{} millon sp",
+    "one": "One million sp",
+    "many": "{} millions sp",
+    "other": "{} millions sp"
+  },
+  "total": {
+    "zero": "millon sp",
+    "one": "million sp",
+    "many": "millions sp",
+    "other": "millions sp"
+  },
+  "active_operation": "Active Operations",
+  "donation_op": "Donation Campaigns",
+  "volunteer_op": "Volunteer Campaigns",
+  "sponsorship_op": "Active Sponsorships",
+  "volunteer_details": "Volunteer Details",
+  "tot_vol_count": "Total number of volunteers",
+  "tot_vol_spe": "volunteer specializations count",
+  "campaign": {
+    "one": "campaign",
+    "few": "{} campaigns",
+    "many": "{} campaigns"
+  },
+  "sponsorship": {
+    "one": "sposorship",
+    "few": "{} sposorships",
+    "many": "{} sposorships"
+  }
 }

@@ -16,7 +16,7 @@ final List<DrawerListItem> sideMenuOptions = [
     title: tr('home'),
   ),
   DrawerListItem(
-    svgSrc: 'assets/icons/menu_tran.svg',
+    svgSrc: 'assets/icons/menu_doc.svg',
     title: tr('employees'),
   ),
   DrawerListItem(
@@ -24,7 +24,7 @@ final List<DrawerListItem> sideMenuOptions = [
     title: tr('person_with_special_needs'),
   ),
   DrawerListItem(
-    svgSrc: 'assets/icons/menu_doc.svg',
+    svgSrc: 'assets/icons/donation.svg',
     title: tr('donation'),
   ),
   DrawerListItem(

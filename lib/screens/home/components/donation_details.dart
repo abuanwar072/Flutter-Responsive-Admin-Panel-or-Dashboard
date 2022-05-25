@@ -35,20 +35,24 @@ class DonationDetails extends StatelessWidget {
             title: tr('medical'),
             amountOfDonations: 0.2,
             numOfFiles: 1328,
+            cardDataColor: Color(0xFFEE2727),
           ),
           _DonationInfoCard(
             svgSrc: "assets/icons/education.svg",
             title: tr('educational'),
             amountOfDonations: 15.3,
             numOfFiles: 1328,
+            cardDataColor: Color(0xFFFFCF26),
           ),
           _DonationInfoCard(
             svgSrc: "assets/icons/entertainment.svg",
             title: tr('entertainment'),
             amountOfDonations: 5.7,
             numOfFiles: 1328,
+            cardDataColor: Color(0xFF26E5FF),
           ),
           _DonationInfoCard(
+            cardDataColor: primaryColor,
             svgSrc: "assets/icons/other.svg",
             title: tr('other'),
             amountOfDonations: 1.3,
@@ -67,19 +71,20 @@ class _DonationInfoCard extends StatelessWidget {
     required this.svgSrc,
     required this.amountOfDonations,
     required this.numOfFiles,
+    required this.cardDataColor,
   }) : super(key: key);
 
   final String title, svgSrc;
   final int numOfFiles;
   final double amountOfDonations;
-
+  final Color cardDataColor;
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: defaultPadding),
       padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
-        border: Border.all(width: 2, color: primaryColor.withOpacity(0.15)),
+        border: Border.all(width: 2, color: cardDataColor.withOpacity(0.15)),
         borderRadius: const BorderRadius.all(
           Radius.circular(defaultPadding),
         ),
@@ -89,7 +94,10 @@ class _DonationInfoCard extends StatelessWidget {
           SizedBox(
             height: 20,
             width: 20,
-            child: SvgPicture.asset(svgSrc),
+            child: SvgPicture.asset(
+              svgSrc,
+              color: cardDataColor,
+            ),
           ),
           Expanded(
             child: Padding(
