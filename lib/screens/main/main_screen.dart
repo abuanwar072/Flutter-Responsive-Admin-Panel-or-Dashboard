@@ -1,8 +1,10 @@
+import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuController.dart';
-import 'package:admin/responsive.dart';
-import 'package:admin/screens/home/home_screen.dart';
+import 'package:admin/controllers/navigation/navigation_bloc.dart';
+import 'package:admin/pages/pages.dart';
+import 'package:admin/screens/main/components/header.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'components/side_menu.dart';
 
@@ -13,22 +15,61 @@ class MainScreen extends StatelessWidget {
       key: context.read<MenuController>().scaffoldKey,
       drawer: SideMenu(),
       body: SafeArea(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // We want this side menu only for large screen
-            if (Responsive.isDesktop(context))
-              Expanded(
-                // default flex = 1
-                // and it takes 1/6 part of the screen
-                child: SideMenu(),
+        child: SingleChildScrollView(
+          primary: false,
+          padding: EdgeInsets.all(defaultPadding),
+          child: Column(
+            children: [
+              Header(),
+              SizedBox(height: defaultPadding),
+              BlocConsumer<NavigationBloc, NavigationState>(
+                listener: (context, state) {
+                  context.read<MenuController>().closeMenu();
+                },
+                builder: (context, state) {
+                  // Home Page is selected
+                  if (state is HomePageInitialized) {
+                    return HomePageFragment();
+                  }
+
+                  // Employees page seleceted
+                  if (state is EmployeesPageInitialized) {
+                    return EmployeesPageFragment();
+                  }
+
+                  // Persons with special needs seleceted
+                  if (state is PersonsWithSpecialNeedsPageInitialized) {
+                    return PersonsPageFragment();
+                  }
+
+                  // Donations page seleceted
+                  if (state is DonationsPageInitialized) {
+                    return DonationPageFragment();
+                  }
+                  // Volunteers page seleceted
+                  if (state is VolunteerPageInitialized) {
+                    return VolunteerPageFragment();
+                  }
+
+                  // Sponsorships page seleceted
+                  if (state is SponsorshipsPageInitialized) {
+                    return SponsorshipsPageFragment();
+                  }
+
+                  // Notifications page seleceted
+                  if (state is NotificationsPageInitialized) {
+                    return NotificationsPageFragment();
+                  }
+
+                  // Persons with special needs seleceted
+                  if (state is SettingsPageInitialized) {
+                    return SettingsPageFragment();
+                  }
+                  return HomePageFragment();
+                },
               ),
-            Expanded(
-              // It takes 5/6 part of the screen
-              flex: 5,
-              child: HomeScreen(),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1,8 +1,7 @@
+import 'package:admin/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
-import '../../../constants.dart';
 
 class Chart extends StatelessWidget {
   const Chart({

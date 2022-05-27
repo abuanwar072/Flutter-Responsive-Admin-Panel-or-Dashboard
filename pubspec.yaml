@@ -18,7 +18,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
   bloc: ^8.0.3
@@ -26,12 +26,14 @@ dependencies:
   data_table_2: ^2.0.3
   easy_localization: ^3.0.1
   equatable: ^2.0.3
+  faker: ^2.0.0
   fl_chart: ^0.50.6
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_svg: ^1.0.3
   google_fonts: ^3.0.0
+  intl: ^0.17.0
   provider: ^6.0.2
 
 dev_dependencies:

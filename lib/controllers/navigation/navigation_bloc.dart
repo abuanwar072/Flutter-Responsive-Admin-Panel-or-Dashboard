@@ -35,27 +35,22 @@ void _onNavigateToPage(
       break;
     case 2:
       emit(PersonsWithSpecialNeedsPageInitialized(
-        pageTitle: pageTitles[event.pageIndex],
-      ));
+          pageTitle: pageTitles[event.pageIndex]));
       break;
     case 3:
       emit(DonationsPageInitialized(pageTitle: pageTitles[event.pageIndex]));
       break;
-
     case 4:
       emit(VolunteerPageInitialized(pageTitle: pageTitles[event.pageIndex]));
       break;
 
     case 5:
-      emit(
-        SponsorshipsPageInitialized(pageTitle: pageTitles[event.pageIndex]),
-      );
+      emit(SponsorshipsPageInitialized(pageTitle: pageTitles[event.pageIndex]));
       break;
 
     case 6:
       emit(
-        NotificationsPageInitialized(pageTitle: pageTitles[event.pageIndex]),
-      );
+          NotificationsPageInitialized(pageTitle: pageTitles[event.pageIndex]));
       break;
 
     case 7:

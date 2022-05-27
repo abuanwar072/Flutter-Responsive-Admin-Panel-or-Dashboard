@@ -2,6 +2,7 @@ import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/controllers/navigation/navigation_bloc.dart';
 import 'package:admin/screens/main/main_screen.dart';
+import 'package:admin/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,6 +42,10 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
+      routes: {
+        '/employee_details': (context) => EmployeesDetailsScreen(),
+        '/add_edit_employee': (context) => AddEditEmployee(),
+      },
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(

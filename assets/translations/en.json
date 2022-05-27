@@ -36,6 +36,22 @@
     "many": "{} Specializations",
     "other": "{} Specializations"
   },
+  "employee": {
+    "zero": "No Employees",
+    "one": "One Employee",
+    "two": "{} Employees",
+    "few": "{} Employees",
+    "many": "{} Employees",
+    "other": "{} Employees"
+  },
+  "admin": {
+    "zero": "No Admins",
+    "one": "One Admin",
+    "two": "{} Admins",
+    "few": "{} Admins",
+    "many": "{} Admins",
+    "other": "{} Admins"
+  },
   "amount": {
     "zero": "{} millon sp",
     "one": "One million sp",
@@ -58,11 +74,33 @@
   "campaign": {
     "one": "campaign",
     "few": "{} campaigns",
-    "many": "{} campaigns"
+    "many": "{} campaigns",
+    "other": "{} campaigns"
   },
   "sponsorship": {
     "one": "sposorship",
     "few": "{} sposorships",
-    "many": "{} sposorships"
-  }
+    "many": "{} sposorships",
+    "other": "{} sposorships"
+  },
+  "total_employees_num": "Number of Employees",
+  "total_admins_num": "Number of Admins",
+  "personal_id": "ID",
+  "first_name": "First name",
+  "last_name": "Last name",
+  "role": "Role",
+  "full_name": "Full name",
+  "phone_number": "Phone number",
+  "email": "Email",
+  "work_start_date": "Work start date",
+  "work_end_date": "Work end date",
+  "personal_information": "Personal Information",
+  "official_docs": "Official Documents",
+  "download": "Download",
+  "employee_role": "employee",
+  "admin_role": "Admin",
+  "address": "Address",
+  "city": "City",
+  "state": "State",
+  "resume": "Resume"
 }

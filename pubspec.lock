@@ -106,6 +106,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0"
+  faker:
+    dependency: "direct main"
+    description:
+      name: faker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   ffi:
     dependency: transitive
     description:
@@ -183,7 +190,7 @@ packages:
     source: hosted
     version: "4.0.1"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
