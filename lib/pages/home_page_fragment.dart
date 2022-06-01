@@ -13,16 +13,25 @@ class HomePageFragment extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // MyFiles(),
-        // SizedBox(height: defaultPadding),
-        // RecentFiles(),
-        // if (Responsive.isMobile(context))
+        // AppBar
+        CustomAppBar(
+          leading: LeadingIcon(
+            icon: Icons.logout_rounded,
+            onPressed: () {},
+          ),
+        ),
+
         SizedBox(height: defaultPadding),
-        // if (Responsive.isMobile(context))
+
+        // All Operation Activated
         _ActiveOperationDetails(),
         SizedBox(height: defaultPadding),
+
+        // Donation Deaails Card
         DonationDetails(),
         SizedBox(height: defaultPadding),
+
+        // Volunteer Details Card
         _VolunteerDetails(
           totalVolunteersNum: 350,
           totalSepcNum: 15,
@@ -46,7 +55,6 @@ class _ActiveOperationDetails extends StatelessWidget {
         color: secondaryColor,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
-      
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -1,14 +1,14 @@
 import 'package:admin/constants.dart';
-import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/controllers/menu_controller/MenuController.dart';
 import 'package:admin/controllers/navigation/navigation_bloc.dart';
 import 'package:admin/pages/pages.dart';
-import 'package:admin/screens/main/components/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'components/side_menu.dart';
 
 class MainScreen extends StatelessWidget {
+  static String routeName() => '/main_screen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,8 +20,6 @@ class MainScreen extends StatelessWidget {
           padding: EdgeInsets.all(defaultPadding),
           child: Column(
             children: [
-              Header(),
-              SizedBox(height: defaultPadding),
               BlocConsumer<NavigationBloc, NavigationState>(
                 listener: (context, state) {
                   context.read<MenuController>().closeMenu();

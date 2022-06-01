@@ -1,12 +1,14 @@
 import 'package:admin/constants.dart';
 import 'package:admin/models/employee.dart';
+import 'package:admin/reusable_widgets/reusable_widgets.dart';
 import 'package:admin/reusable_widgets/search_field.dart';
-import 'package:admin/screens/employees_details_screen.dart';
+import 'package:admin/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 
 class EmployeesPageFragment extends StatelessWidget {
+  static String routeName() => '/employees_page';
   EmployeesPageFragment({
     Key? key,
   }) : super(key: key);
@@ -20,10 +22,26 @@ class EmployeesPageFragment extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
+        CustomAppBar(
+          leading: LeadingIcon(
+            onPressed: () {
+              // Add new employee
+              Navigator.pushNamed(
+                context,
+                AddEditEmployeeScreen.routeName(),
+                arguments: {
+                  'isInAddMode': true,
+                },
+              );
+            },
+            icon: Icons.add_rounded,
+          ),
+        ),
+        SizedBox(height: defaultPadding),
         SearchField(),
         SizedBox(height: defaultPadding * 0.5),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.76,
+          height: MediaQuery.of(context).size.height * 0.78,
           child: ListView(
             physics: BouncingScrollPhysics(),
             children: [
@@ -52,6 +70,7 @@ class EmployeesPageFragment extends StatelessWidget {
                         endDate: DateFormat('y-mm-dd').format(
                             faker.date.dateTime(minYear: 2000, maxYear: 2022)),
                         isAdmin: faker.randomGenerator.boolean(),
+                        resumeFileName: 'resume.png',
                       ),
                     );
                   },

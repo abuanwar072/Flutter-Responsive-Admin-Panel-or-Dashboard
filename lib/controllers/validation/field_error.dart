@@ -1,0 +1,1 @@
+enum FieldError { Empty, Invalid }

@@ -102,5 +102,12 @@
   "address": "Address",
   "city": "City",
   "state": "State",
-  "resume": "Resume"
+  "resume": "Resume",
+  "add_emp": "Add an employee",
+  "edit_emp": "Edit Employee Data",
+  "emp_data": "Employment data",
+  "password": "Password",
+  "conf_pass": "Confirm password",
+  "select": "select",
+  "please_select_a_resume": "please upload the employee's resume"
 }

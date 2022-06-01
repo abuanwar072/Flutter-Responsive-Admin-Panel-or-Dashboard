@@ -1,5 +1,7 @@
 import 'package:admin/constants.dart';
 import 'package:admin/models/employee.dart';
+import 'package:admin/reusable_widgets/reusable_widgets.dart';
+import 'package:admin/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,7 @@ class EmployeesDetailsScreen extends StatelessWidget {
         centerTitle: true,
         title: Text(
           employee.firstName! + ' ' + employee.lastName!,
-          style: TextStyle(color: Colors.black),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         elevation: 0,
         backgroundColor: bgColor,
@@ -29,27 +31,35 @@ class EmployeesDetailsScreen extends StatelessWidget {
             Icons.arrow_back,
             color: Colors.black,
           ),
-          splashRadius: 25,
+          splashRadius: 20,
         ),
         actions: [
           IconButton(
             onPressed: () {
-              // Navigator.pushNamed(context, '/add_edit_employee');
+              Navigator.pushNamed(
+                context,
+                AddEditEmployeeScreen.routeName(),
+                arguments: {
+                  'isInAddMode': false,
+                  'employee': employee,
+                },
+              );
             },
             icon: Icon(
               Icons.edit_note_rounded,
               color: Colors.black,
             ),
-            splashRadius: 25,
+            splashRadius: 20,
           ),
         ],
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         padding: const EdgeInsets.all(defaultPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _DataCard(
+            DataCard(
               child: Column(
                 children: [
                   CircleAvatar(
@@ -62,9 +72,11 @@ class EmployeesDetailsScreen extends StatelessWidget {
                     '${employee.firstName!} ${employee.lastName!}',
                     style: TextStyle(color: primaryColor),
                   ),
+                  SizedBox(height: defaultPadding * 0.5),
                   Text(
                     '${tr('personal_id')} : ${employee.empId}',
                   ),
+                  SizedBox(height: defaultPadding * 0.25),
                   Text(
                     employee.isAdmin! ? tr('admin_role') : tr('employee_role'),
                   ),
@@ -72,7 +84,7 @@ class EmployeesDetailsScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: defaultPadding),
-            _DataCard(
+            DataCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -85,33 +97,33 @@ class EmployeesDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: defaultPadding),
-                  _InfoRow(
+                  InformationRow(
                     leading: tr('first_name'),
                     trailing: employee.firstName!,
                   ),
-                  SizedBox(height: defaultPadding * .5),
-                  _InfoRow(
+                  SizedBox(height: defaultPadding * .75),
+                  InformationRow(
                     leading: tr('last_name'),
                     trailing: employee.lastName!,
                   ),
-                  SizedBox(height: defaultPadding * .5),
-                  _InfoRow(
+                  SizedBox(height: defaultPadding * .75),
+                  InformationRow(
                     leading: tr('phone_number'),
                     trailing: employee.phoneNumber!,
                   ),
-                  SizedBox(height: defaultPadding * .5),
-                  _InfoRow(
+                  SizedBox(height: defaultPadding * .75),
+                  InformationRow(
                     leading: tr('email'),
                     trailing: employee.email!,
                   ),
-                  SizedBox(height: defaultPadding * .5),
-                  _InfoRow(
+                  SizedBox(height: defaultPadding * .75),
+                  InformationRow(
                     leading: tr('work_start_date'),
                     trailing: employee.startDate!,
                   ),
-                  SizedBox(height: defaultPadding * .5),
+                  SizedBox(height: defaultPadding * .75),
                   if (employee.endDate != null)
-                    _InfoRow(
+                    InformationRow(
                       leading: tr('work_end_date'),
                       trailing: employee.endDate!,
                     ),
@@ -119,7 +131,7 @@ class EmployeesDetailsScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: defaultPadding),
-            _DataCard(
+            DataCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -132,12 +144,12 @@ class EmployeesDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: defaultPadding),
-                  _InfoRow(
+                  InformationRow(
                     leading: tr('state'),
                     trailing: employee.state!,
                   ),
-                  SizedBox(height: defaultPadding * 0.5),
-                  _InfoRow(
+                  SizedBox(height: defaultPadding * 0.75),
+                  InformationRow(
                     leading: tr('city'),
                     trailing: employee.cityName!,
                   ),
@@ -145,7 +157,7 @@ class EmployeesDetailsScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: defaultPadding),
-            _DataCard(
+            DataCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -184,66 +196,6 @@ class EmployeesDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _DataCard extends StatelessWidget {
-  const _DataCard({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: defaultPadding * 0.5,
-        horizontal: defaultPadding,
-      ),
-      decoration: BoxDecoration(
-        color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-      ),
-      child: child,
-    );
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({
-    Key? key,
-    required this.leading,
-    required this.trailing,
-    this.leadingColor,
-  }) : super(key: key);
-
-  final String leading;
-  final String trailing;
-  final Color? leadingColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          leading,
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge!
-              .copyWith(color: leadingColor),
-        ),
-        Text(
-          trailing,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: (leadingColor ?? Colors.grey).withOpacity(0.9),
-                overflow: TextOverflow.ellipsis,
-              ),
-        ),
-      ],
     );
   }
 }
