@@ -37,4 +37,5 @@ mixin ValidationMixin {
     }
     return _dateRegex.hasMatch(date);
   }
+
 }

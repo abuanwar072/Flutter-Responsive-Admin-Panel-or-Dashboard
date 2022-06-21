@@ -6,9 +6,11 @@ import 'package:admin/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class EmployeesPageFragment extends StatelessWidget {
   static String routeName() => '/employees_page';
+
   EmployeesPageFragment({
     Key? key,
   }) : super(key: key);
@@ -41,53 +43,55 @@ class EmployeesPageFragment extends StatelessWidget {
         SearchField(),
         SizedBox(height: defaultPadding * 0.5),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.78,
-          child: ListView(
-            physics: BouncingScrollPhysics(),
-            children: [
-              EmployeesSummary(
-                totalEmployees: totalEmployees,
-                totalAdmins: totalAdmins,
-              ),
-              SizedBox(height: defaultPadding),
-              for (int i = 0; i < 72; i++)
-                EmployeeCard(
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      EmployeesDetailsScreen.routeName(),
-                      arguments: Employee(
-                        empId: i,
-                        cityName: faker.address.city(),
-                        state: faker.address.state(),
-                        firstName: faker.person.firstName(),
-                        lastName: faker.person.lastName(),
-                        phoneNumber: faker.phoneNumber.us(),
-                        email: faker.internet.email(),
-                        cvImgUrl: faker.image.image(),
-                        startDate: DateFormat('y-mm-dd').format(
-                            faker.date.dateTime(minYear: 2000, maxYear: 2022)),
-                        endDate: DateFormat('y-mm-dd').format(
-                            faker.date.dateTime(minYear: 2000, maxYear: 2022)),
-                        isAdmin: faker.randomGenerator.boolean(),
-                        resumeFileName: 'resume.png',
-                      ),
-                    );
-                  },
-                  employee: Employee(
-                    empId: i,
-                    cityName: faker.address.city(),
-                    state: faker.address.state(),
-                    firstName: faker.person.firstName(),
-                    lastName: faker.person.lastName(),
-                    phoneNumber: faker.phoneNumber.us(),
-                    email: faker.internet.email(),
-                    cvImgUrl: faker.image.image(),
-                    startDate: faker.date.toString(),
-                    isAdmin: faker.randomGenerator.boolean(),
-                  ),
+          height: MediaQuery.of(context).size.height * 0.765,
+          child: SlidableAutoCloseBehavior(
+            child: ListView(
+              physics: BouncingScrollPhysics(),
+              children: [
+                EmployeesSummary(
+                  totalEmployees: totalEmployees,
+                  totalAdmins: totalAdmins,
                 ),
-            ],
+                SizedBox(height: defaultPadding),
+                for (int i = 0; i < 72; i++)
+                  EmployeeCard(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        EmployeesDetailsScreen.routeName(),
+                        arguments: Employee(
+                          empId: i,
+                          cityName: faker.address.city(),
+                          state: faker.address.state(),
+                          firstName: faker.person.firstName(),
+                          lastName: faker.person.lastName(),
+                          phoneNumber: faker.phoneNumber.us(),
+                          email: faker.internet.email(),
+                          cvImgUrl: faker.image.image(),
+                          startDate: DateFormat('y-mm-dd').format(faker.date
+                              .dateTime(minYear: 2000, maxYear: 2022)),
+                          endDate: DateFormat('y-mm-dd').format(faker.date
+                              .dateTime(minYear: 2000, maxYear: 2022)),
+                          isAdmin: faker.randomGenerator.boolean(),
+                          resumeFileName: 'resume.png',
+                        ),
+                      );
+                    },
+                    employee: Employee(
+                      empId: i,
+                      cityName: faker.address.city(),
+                      state: faker.address.state(),
+                      firstName: faker.person.firstName(),
+                      lastName: faker.person.lastName(),
+                      phoneNumber: faker.phoneNumber.us(),
+                      email: faker.internet.email(),
+                      cvImgUrl: faker.image.image(),
+                      startDate: faker.date.toString(),
+                      isAdmin: faker.randomGenerator.boolean(),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ],
@@ -104,32 +108,53 @@ class EmployeeCard extends StatelessWidget {
 
   final Employee employee;
   final VoidCallback onPressed;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: defaultPadding * 0.5),
-      child: _DataCard(
-        onPressed: onPressed,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Slidable(
+        endActionPane: ActionPane(
+          extentRatio: 0.3,
+          motion: ScrollMotion(),
           children: [
-            _InfoRow(
-              leading: tr('personal_id'),
-              trailing: '${employee.empId!}',
-              leadingColor: primaryColor,
-            ),
-            SizedBox(height: defaultPadding),
-            _InfoRow(
-              leading: tr('full_name'),
-              trailing: '${employee.firstName!} ${employee.lastName!}',
-            ),
-            SizedBox(height: defaultPadding * 0.5),
-            _InfoRow(
-              leading: tr('role'),
-              trailing:
-                  employee.isAdmin! ? tr('admin_role') : tr('employee_role'),
+            SizedBox(width: 4),
+            SlidableAction(
+              autoClose: true,
+              borderRadius: BorderRadius.circular(10),
+              backgroundColor: Colors.red,
+              foregroundColor: secondaryColor,
+              icon: Icons.delete,
+              label: tr('delete'),
+              onPressed: (context) {
+                // todo: perform delete employee event
+              },
             ),
           ],
+        ),
+        child: _DataCard(
+          onPressed: onPressed,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _InfoRow(
+                leading: tr('personal_id'),
+                trailing: '${employee.empId!}',
+                leadingColor: primaryColor,
+              ),
+              SizedBox(height: defaultPadding),
+              _InfoRow(
+                leading: tr('full_name'),
+                trailing: '${employee.firstName!} ${employee.lastName!}',
+              ),
+              SizedBox(height: defaultPadding * 0.5),
+              _InfoRow(
+                leading: tr('role'),
+                trailing:
+                    employee.isAdmin! ? tr('admin_role') : tr('employee_role'),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -178,6 +203,7 @@ class EmployeesSummary extends StatelessWidget {
   }) : super(key: key);
   final int totalEmployees;
   final int totalAdmins;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -253,11 +279,3 @@ class _InfoRow extends StatelessWidget {
     );
   }
 }
-
-// _DataCard(
-//   child: DetailsInfoCard(
-//     title: tr('total_employees_num'),
-//     leading: Text('employee').plural(totalEmployees),
-//     cardColor: Color(0XFFF5F5F5),
-//   ),
-// ),

@@ -1,37 +1,65 @@
 import 'package:admin/constants.dart';
-import 'package:admin/models/employee.dart';
+import 'package:admin/models/models.dart';
 import 'package:admin/reusable_widgets/reusable_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 
-class AddEditEmployeeScreen extends StatelessWidget {
-  static String routeName() => '/add_edit_employee';
+class AddEditPersonScreen extends StatelessWidget {
+  AddEditPersonScreen({Key? key}) : super(key: key);
 
-  AddEditEmployeeScreen({Key? key}) : super(key: key);
+  static String routeName() => '/add_edit_person';
+
   final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _emailController = TextEditingController();
   final _stateController = TextEditingController();
-  final _cityController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _nationalIdNumberController = TextEditingController();
+  final _medicalStatusController = TextEditingController();
 
-  final ValueNotifier<bool> isEmpAdmin = ValueNotifier(false);
-  final ValueNotifier<String> resumeFileName = ValueNotifier('');
+  final ValueNotifier<DateTime?> birthDate = ValueNotifier(null);
+  final ValueNotifier<String> healthReportFileName = ValueNotifier('');
 
   final DateTime startDate = DateTime.now();
 
-  _fillEmployeeData(Employee emp) {
-    _firstNameController.text = emp.firstName!;
-    _lastNameController.text = emp.lastName!;
-    _phoneController.text = emp.phoneNumber!;
-    _emailController.text = emp.email!;
-    _stateController.text = emp.state!;
-    _cityController.text = emp.cityName!;
+  _fillEmployeeData(Person person) {
+    _firstNameController.text = person.firstName!;
+    _lastNameController.text = person.lastName!;
+    _phoneController.text = person.phoneNumber!;
+    _stateController.text = person.state!;
 
-    isEmpAdmin.value = emp.isAdmin!;
-    resumeFileName.value = emp.resumeFileName!;
+    // todo: add birthDateVariable here
+    birthDate.value = person.birthDate;
+
+    _nationalIdNumberController.text = person.nationalNumber!;
+    _medicalStatusController.text = person.healthStatus!;
+
+    // health report document file url
+    healthReportFileName.value = person.healthReportUrl!;
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: ColorScheme.light(
+                primary: primaryColor, // header background color
+                onPrimary: Colors.white, // header text color
+                onSurface: primaryColor.withOpacity(0.5), // body text color
+              ),
+            ),
+            child: child!,
+          );
+        },
+        initialDate: DateTime(2000),
+        firstDate: DateTime(1940),
+        lastDate: DateTime(2018));
+    if (picked != null && picked != birthDate.value) {
+      birthDate.value = picked;
+    }
   }
 
   Future<bool> _showExitPopup(context, isInAddMode) async {
@@ -43,8 +71,8 @@ class AddEditEmployeeScreen extends StatelessWidget {
             title: Text('discard_changes').tr(),
             content: Text(
               isInAddMode
-                  ? 'discard_employee_insertion'
-                  : 'discard_employee_update',
+                  ? 'discard_person_insertion'
+                  : 'discard_person_update',
               style: Theme.of(context).textTheme.bodyMedium,
             ).tr(),
             actions: [
@@ -79,8 +107,8 @@ class AddEditEmployeeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
-    final Employee? emp = data['employee'];
-    if (emp != null) _fillEmployeeData(emp);
+    final Person? person = data['person'];
+    if (person != null) _fillEmployeeData(person);
     final isInAddMode = data['isInAddMode'];
     return WillPopScope(
       onWillPop: () {
@@ -90,7 +118,7 @@ class AddEditEmployeeScreen extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            isInAddMode ? tr('add_emp') : tr('edit_emp'),
+            isInAddMode ? tr('add_person') : tr('edit_person'),
             style: Theme.of(context).textTheme.titleMedium,
           ),
           elevation: 0,
@@ -110,7 +138,7 @@ class AddEditEmployeeScreen extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                // todo: perform update functionality
+                // todo: perform update person functionality
               },
               icon: Icon(
                 Icons.check_circle_outline_rounded,
@@ -173,32 +201,70 @@ class AddEditEmployeeScreen extends StatelessWidget {
                           },
                         ),
                         SizedBox(height: defaultPadding * 0.5),
+                        GestureDetector(
+                          onTap: () {
+                            // show date picker dialogue
+                            _selectDate(context);
+                          },
+                          child: ValueListenableBuilder<DateTime?>(
+                            valueListenable: birthDate,
+                            builder: (context, dateTime, _) {
+                              return AbsorbPointer(
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    icon: Icon(Icons.date_range, size: 20),
+                                    contentPadding:
+                                        EdgeInsets.only(bottom: 4, left: 4),
+                                    hintText: dateTime == null
+                                        ? tr('birth_date')
+                                        : null,
+                                    labelText: dateTime != null
+                                        ? Jiffy(dateTime, "dd, MM yyyy").yMd
+                                        : null,
+                                    labelStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(height: 0.5),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                          color: Theme.of(context)
+                                              .hintColor
+                                              .withOpacity(0.5),
+                                        ),
+                                    filled: true,
+                                    fillColor: Colors.transparent,
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 1,
+                                        color: primaryColor,
+                                      ),
+                                    ),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 1,
+                                        color: Theme.of(context)
+                                            .hintColor
+                                            .withOpacity(0.2),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        SizedBox(height: defaultPadding * 0.5),
                         _buildTextFormField(
                           context: context,
-                          hintText: tr('email'),
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
+                          hintText: tr('nat_id_num'),
+                          controller: _nationalIdNumberController,
                           validator: (content) {
                             return null;
                           },
+                          keyboardType: TextInputType.number,
                         ),
-                        if (emp == null)
-                          Column(
-                            children: [
-                              SizedBox(height: defaultPadding * 0.5),
-                              _buildTextFormField(
-                                context: context,
-                                hintText: tr('password'),
-                                isPasswordField: true,
-                                keyboardType: TextInputType.visiblePassword,
-                                controller: _passwordController,
-                                validator: (content) {
-                                  return null;
-                                },
-                              ),
-                            ],
-                          ),
-                        SizedBox(height: defaultPadding * 0.5)
                       ],
                     ),
                   ),
@@ -229,11 +295,31 @@ class AddEditEmployeeScreen extends StatelessWidget {
                           },
                         ),
                         SizedBox(height: defaultPadding * 0.5),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: defaultPadding),
+                DataCard(
+                  child: Padding(
+                    padding: const EdgeInsets.all(defaultPadding * 0.5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          tr('health_information'),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: primaryColor,
+                          ),
+                        ),
+                        SizedBox(height: defaultPadding),
                         _buildTextFormField(
                           context: context,
-                          hintText: tr('city'),
-                          controller: _cityController,
-                          keyboardType: TextInputType.name,
+                          hintText: tr('medical_status'),
+                          controller: _medicalStatusController,
+                          keyboardType: TextInputType.text,
                           validator: (content) {
                             return null;
                           },
@@ -251,7 +337,7 @@ class AddEditEmployeeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          tr('emp_data'),
+                          tr('medical_docs'),
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -259,64 +345,6 @@ class AddEditEmployeeScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: defaultPadding),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: defaultPadding * 0.5,
-                              ),
-                              child: Text(
-                                tr('role'),
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 100,
-                              child: ValueListenableBuilder(
-                                valueListenable: isEmpAdmin,
-                                builder: (context, bool value, _) {
-                                  print(value);
-                                  return DropdownButtonFormField<bool>(
-                                    value: value,
-                                    alignment: AlignmentDirectional.center,
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.transparent,
-                                      filled: true,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                    ),
-                                    items: [
-                                      DropdownMenuItem(
-                                        value: false,
-                                        child: Text(
-                                          tr('employee_role'),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall,
-                                        ),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: true,
-                                        child: Text(
-                                          tr('admin_role'),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall,
-                                        ),
-                                      ),
-                                    ],
-                                    onChanged: (isAdmin) {
-                                      isEmpAdmin.value = isAdmin!;
-                                    },
-                                  );
-                                },
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(height: defaultPadding * 0.5),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: defaultPadding * 0.5,
@@ -325,12 +353,12 @@ class AddEditEmployeeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                tr('resume'),
+                                tr('health_report'),
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               TextButton(
                                 onPressed: () {
-                                  // todo: impelement downloading the resume to user's device
+                                  // todo: implement downloading the health report to user's device
                                 },
                                 style: TextButton.styleFrom(
                                     backgroundColor: primaryColor),
@@ -344,13 +372,13 @@ class AddEditEmployeeScreen extends StatelessWidget {
                         ),
                         SizedBox(height: defaultPadding),
                         ValueListenableBuilder(
-                          valueListenable: resumeFileName,
-                          builder: (contxt, String fileName, _) {
+                          valueListenable: healthReportFileName,
+                          builder: (context, String fileName, _) {
                             return Align(
                               alignment: Alignment.center,
                               child: Text(
                                 fileName.isEmpty
-                                    ? tr('please_select_a_resume')
+                                    ? tr('please_select_a_health_report')
                                     : fileName,
                                 style: Theme.of(context)
                                     .textTheme

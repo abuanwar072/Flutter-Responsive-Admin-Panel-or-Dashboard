@@ -18,7 +18,8 @@
     "zero": "{} Donator",
     "one": "Donator",
     "many": "{} Donators",
-    "other": "{} Donators"
+    "other": "{} Donators",
+    "few": ""
   },
   "volunteer_person": {
     "zero": "No Volunteers",
@@ -56,13 +57,15 @@
     "zero": "{} millon sp",
     "one": "One million sp",
     "many": "{} millions sp",
-    "other": "{} millions sp"
+    "other": "{} millions sp",
+    "few": "{} million sp"
   },
   "total": {
     "zero": "millon sp",
     "one": "million sp",
     "many": "millions sp",
-    "other": "millions sp"
+    "other": "millions sp",
+    "few": ""
   },
   "active_operation": "Active Operations",
   "donation_op": "Donation Campaigns",
@@ -103,11 +106,38 @@
   "city": "City",
   "state": "State",
   "resume": "Resume",
-  "add_emp": "Add an employee",
+  "add_emp": "Register an employee",
   "edit_emp": "Edit Employee Data",
   "emp_data": "Employment data",
   "password": "Password",
   "conf_pass": "Confirm password",
   "select": "select",
-  "please_select_a_resume": "please upload the employee's resume"
+  "please_select_a_resume": "please upload the employee's resume",
+  "delete": "delete",
+  "discard_changes": "Discard changes",
+  "discard_employee_insertion": "Are you sure to undo adding an employee?",
+  "discard_employee_update": "Are you sure to undo updating the employee?",
+  "no": "No",
+  "yes": "Yes",
+  "persons_count": {
+    "one": "one person",
+    "few": "{} person",
+    "many": "{} persons",
+    "other": "{} persons"
+  },
+  "persons_count_title": "Number of registered persons",
+  "age": "age",
+  "nat_id_num": "National ID number",
+  "health_report": "Health Report",
+  "add_person": "Register a person",
+  "edit_person": "Edit Person Data",
+  "birth_date": "Birth Date",
+  "health_information": "Health Information",
+  "medical_status": "Medical status",
+  "medical_docs": "Medical Documentations",
+  "please_select_a_health_report": "Please select health report file",
+  "discard_person_insertion": "Are you sure to undo registering a new person?",
+  "discard_person_update": "Are you sure to undo updating person's data ?",
+  "delete_person_warning": "Are you sure about deleting person's data ?",
+  "warning": "Warning"
 }

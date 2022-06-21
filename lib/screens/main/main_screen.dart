@@ -30,36 +30,36 @@ class MainScreen extends StatelessWidget {
                     return HomePageFragment();
                   }
 
-                  // Employees page seleceted
+                  // Employees page selected
                   if (state is EmployeesPageInitialized) {
                     return EmployeesPageFragment();
                   }
 
-                  // Persons with special needs seleceted
+                  // Persons with special needs selected
                   if (state is PersonsWithSpecialNeedsPageInitialized) {
                     return PersonsPageFragment();
                   }
 
-                  // Donations page seleceted
+                  // Donations page selected
                   if (state is DonationsPageInitialized) {
                     return DonationPageFragment();
                   }
-                  // Volunteers page seleceted
+                  // Volunteers page selected
                   if (state is VolunteerPageInitialized) {
                     return VolunteerPageFragment();
                   }
 
-                  // Sponsorships page seleceted
+                  // Sponsorships page selected
                   if (state is SponsorshipsPageInitialized) {
                     return SponsorshipsPageFragment();
                   }
 
-                  // Notifications page seleceted
+                  // Notifications page selected
                   if (state is NotificationsPageInitialized) {
                     return NotificationsPageFragment();
                   }
 
-                  // Persons with special needs seleceted
+                  // Persons with special needs selected
                   if (state is SettingsPageInitialized) {
                     return SettingsPageFragment();
                   }

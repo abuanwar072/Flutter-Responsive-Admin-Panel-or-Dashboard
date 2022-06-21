@@ -14,7 +14,6 @@
   "educational": "التبرعات التعليمية",
   "entertainment": "التبرعات الترفيهية",
   "other": "التبرعات الأخرى",
-  "donators_count": "{} متبرّع",
   "donator": {
     "zero": "{} متبرع",
     "one": "{} متبرع",
@@ -79,7 +78,8 @@
   "campaign": {
     "one": "حملة",
     "few": "{} حملات",
-    "many": "{} حملة"
+    "many": "{} حملة",
+    "other": "{} حملة"
   },
   "sponsorship": {
     "one": "كفالة",
@@ -112,5 +112,32 @@
   "password": "كلمة المرور",
   "conf_pass": "تأكيد كلمة المرور",
   "select": "اختيار",
-  "please_select_a_resume": "الرجاء اختيار ملف السيرة الذاتية للموظف"
+  "please_select_a_resume": "الرجاء اختيار ملف السيرة الذاتية للموظف",
+  "delete": "حذف",
+  "discard_changes": "تجاهل التغييرات",
+  "discard_employee_insertion": "هل أنت متأكد من التراجع عن إضافة موظف؟",
+  "discard_employee_update": "هل أنت متأكد من التراجع عن تعديل الموظف؟",
+  "no": "لا",
+  "yes": "نعم",
+  "persons_count": {
+    "one": "شخص واحد",
+    "few": "{} أشخاص",
+    "many": "{} شخص",
+    "other": "{} شخص"
+  },
+  "persons_count_title": "عدد الأشخاص المسجلين",
+  "age": "العمر",
+  "nat_id_num": "رقم الهوية الوطني",
+  "health_report": "التقرير الطبي",
+  "add_person": "تسجيل شخص جديد",
+  "edit_person": "تعديل بيانات الشخص",
+  "birth_date": "تاريخ الميلاد",
+  "health_information": "المعلومات الصحيّة",
+  "medical_status": "الحالة الطبيّة",
+  "medical_docs": "المستندات الطبيّة",
+  "please_select_a_health_report": "الرجاء اختيار ملف التقرير الطبي",
+  "discard_person_insertion": "هل أنت متأكد من التراجع عن تسجيل شخص جديد؟",
+  "discard_person_update": "هل أنت متأكد من التراجع عن تعديل بيانات الشخص ؟",
+  "delete_person_warning": "هل أنت متأكد من حذف الشخص المسجل ضمن الجمعية؟",
+  "warning": "تحذير"
 }

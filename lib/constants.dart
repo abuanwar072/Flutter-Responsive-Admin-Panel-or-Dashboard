@@ -15,5 +15,7 @@ const defaultPadding = 16.0;
 Map<String, Widget Function(BuildContext)> routes = {
   '/main_screen': (context) => MainScreen(),
   '/employee_details': (context) => EmployeesDetailsScreen(),
+  '/person_details': (context) => PersonDetailsScreen(),
   '/add_edit_employee': (context) => AddEditEmployeeScreen(),
+  '/add_edit_person': (context) => AddEditPersonScreen(),
 };
