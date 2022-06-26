@@ -1,5 +1,6 @@
 import 'package:admin/controllers/menu_controller/MenuController.dart';
 import 'package:admin/controllers/navigation/navigation_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -31,10 +32,10 @@ class CustomAppBar extends StatelessWidget {
             return Text(
               state.pageTitle,
               style: Theme.of(context).textTheme.headline6,
-            );
+            ).tr();
           },
         ),
-        leading!,
+        if (leading != null) leading!,
       ],
     );
   }

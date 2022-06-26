@@ -122,7 +122,8 @@ class PersonsPageFragment extends StatelessWidget {
                           PersonDetailsScreen.routeName(),
                           arguments: Person(
                             personId: i,
-                            healthStatus: _faker.randomGenerator.string(10),
+                            healthStatusAr: _faker.randomGenerator.string(10),
+                            healthStatusEn: _faker.randomGenerator.string(10),
                             firstName: _faker.person.firstName(),
                             lastName: _faker.person.lastName(),
                             phoneNumber: _faker.phoneNumber.us(),
@@ -137,7 +138,8 @@ class PersonsPageFragment extends StatelessWidget {
                       },
                       person: Person(
                         personId: i,
-                        healthStatus: _faker.randomGenerator.string(10),
+                        healthStatusAr: _faker.randomGenerator.string(10),
+                        healthStatusEn: _faker.randomGenerator.string(10),
                         firstName: _faker.person.firstName(),
                         lastName: _faker.person.lastName(),
                         phoneNumber: _faker.phoneNumber.us(),
@@ -208,6 +210,7 @@ class PersonCard extends StatelessWidget {
     );
   }
 }
+
 
 class _DataCard extends StatelessWidget {
   const _DataCard({

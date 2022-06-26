@@ -4,24 +4,26 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 part 'navigation_event.dart';
+
 part 'navigation_state.dart';
 
 class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
-  NavigationBloc() : super(HomePageInitialized(pageTitle: tr('home'))) {
+  NavigationBloc() : super(HomePageInitialized(pageTitle: 'home')) {
     on(_onNavigateToPage);
   }
 }
 
 final List<String> pageTitles = [
-  tr('home'),
-  tr('employees'),
-  tr('person_with_special_needs'),
-  tr('donation'),
-  tr('volunteer'),
-  tr('sponsorships'),
-  tr('notifications'),
-  tr('settings'),
+  'home',
+  'employees',
+  'person_with_special_needs',
+  'donation',
+  'volunteer',
+  'sponsorships',
+  'notifications',
+  'settings',
 ];
+
 void _onNavigateToPage(
   NavigateToPage event,
   Emitter<NavigationState> emit,

@@ -16,7 +16,8 @@ class AddEditPersonScreen extends StatelessWidget {
   final _phoneController = TextEditingController();
   final _stateController = TextEditingController();
   final _nationalIdNumberController = TextEditingController();
-  final _medicalStatusController = TextEditingController();
+  final _medicalStatusArController = TextEditingController();
+  final _medicalStatusEnController = TextEditingController();
 
   final ValueNotifier<DateTime?> birthDate = ValueNotifier(null);
   final ValueNotifier<String> healthReportFileName = ValueNotifier('');
@@ -33,7 +34,8 @@ class AddEditPersonScreen extends StatelessWidget {
     birthDate.value = person.birthDate;
 
     _nationalIdNumberController.text = person.nationalNumber!;
-    _medicalStatusController.text = person.healthStatus!;
+    _medicalStatusArController.text = person.healthStatusAr!;
+    _medicalStatusEnController.text = person.healthStatusEn!;
 
     // health report document file url
     healthReportFileName.value = person.healthReportUrl!;
@@ -54,9 +56,10 @@ class AddEditPersonScreen extends StatelessWidget {
             child: child!,
           );
         },
-        initialDate: DateTime(2000),
+        initialDate: birthDate.value ?? DateTime(2000),
         firstDate: DateTime(1940),
-        lastDate: DateTime(2018));
+        // subtract 3 years from current year to prevent user from selecting near date
+        lastDate: DateTime.now().subtract(Duration(days: 365 * 3)));
     if (picked != null && picked != birthDate.value) {
       birthDate.value = picked;
     }
@@ -317,8 +320,18 @@ class AddEditPersonScreen extends StatelessWidget {
                         SizedBox(height: defaultPadding),
                         _buildTextFormField(
                           context: context,
-                          hintText: tr('medical_status'),
-                          controller: _medicalStatusController,
+                          hintText: tr('medical_status_ar'),
+                          controller: _medicalStatusArController,
+                          keyboardType: TextInputType.text,
+                          validator: (content) {
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: defaultPadding),
+                        _buildTextFormField(
+                          context: context,
+                          hintText: tr('medical_status_en'),
+                          controller: _medicalStatusEnController,
                           keyboardType: TextInputType.text,
                           validator: (content) {
                             return null;

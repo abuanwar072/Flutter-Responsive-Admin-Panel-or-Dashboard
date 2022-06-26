@@ -2,45 +2,45 @@ import 'package:easy_localization/easy_localization.dart';
 
 class DrawerListItem {
   final String svgSrc;
-  final String title;
+  final String titleKey;
 
   DrawerListItem({
     required this.svgSrc,
-    required this.title,
+    required this.titleKey,
   });
 }
 
 final List<DrawerListItem> sideMenuOptions = [
   DrawerListItem(
     svgSrc: 'assets/icons/menu_dashbord.svg',
-    title: tr('home'),
+    titleKey: 'home',
   ),
   DrawerListItem(
     svgSrc: 'assets/icons/menu_doc.svg',
-    title: tr('employees'),
+    titleKey: 'employees',
   ),
   DrawerListItem(
     svgSrc: 'assets/icons/menu_profile.svg',
-    title: tr('person_with_special_needs'),
+    titleKey: 'person_with_special_needs',
   ),
   DrawerListItem(
     svgSrc: 'assets/icons/donation.svg',
-    title: tr('donation'),
+    titleKey: 'donation',
   ),
   DrawerListItem(
     svgSrc: 'assets/icons/menu_store.svg',
-    title: tr('volunteer'),
+    titleKey: 'volunteer',
   ),
   DrawerListItem(
     svgSrc: 'assets/icons/sponsorships.svg',
-    title: tr('sponsorships'),
+    titleKey: 'sponsorships',
   ),
   DrawerListItem(
     svgSrc: 'assets/icons/menu_notification.svg',
-    title: tr('notifications'),
+    titleKey: 'notifications',
   ),
   DrawerListItem(
     svgSrc: 'assets/icons/menu_setting.svg',
-    title: tr('settings'),
+    titleKey: 'settings',
   ),
 ];

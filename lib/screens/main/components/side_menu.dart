@@ -68,9 +68,9 @@ class DrawerListTile extends StatelessWidget {
         height: 16,
       ),
       title: Text(
-        drawerItem.title,
+        drawerItem.titleKey,
         style: TextStyle(color: Colors.black54),
-      ),
+      ).tr(),
     );
   }
 }

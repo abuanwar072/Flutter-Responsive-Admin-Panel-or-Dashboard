@@ -273,7 +273,7 @@ class AddEditEmployeeScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              width: 100,
+                              width: 120,
                               child: ValueListenableBuilder(
                                 valueListenable: isEmpAdmin,
                                 builder: (context, bool value, _) {

@@ -1,6 +1,7 @@
 class Person {
   final int? personId;
-  final String? healthStatus;
+  final String? healthStatusEn;
+  final String? healthStatusAr;
   final String? firstName;
   final String? lastName;
   final String? phoneNumber;
@@ -12,7 +13,8 @@ class Person {
 
   Person({
     this.personId,
-    this.healthStatus,
+    this.healthStatusEn,
+    this.healthStatusAr,
     this.firstName,
     this.lastName,
     this.phoneNumber,

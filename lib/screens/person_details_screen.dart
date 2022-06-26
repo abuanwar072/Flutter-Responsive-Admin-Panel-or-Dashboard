@@ -77,7 +77,7 @@ class PersonDetailsScreen extends StatelessWidget {
                     '${tr('personal_id')} : ${person.personId}',
                   ),
                   SizedBox(height: defaultPadding * 0.25),
-                  Text(person.healthStatus!),
+                  Text(person.healthStatusAr!), // TODO: CHANGE DUE TO CURRENT LANGUAGE
                 ],
               ),
             ),
