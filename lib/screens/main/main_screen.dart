@@ -1,4 +1,4 @@
-import 'package:admin/constants.dart';
+import 'package:admin/config/constants.dart';
 import 'package:admin/controllers/menu_controller/MenuController.dart';
 import 'package:admin/controllers/navigation/navigation_bloc.dart';
 import 'package:admin/pages/pages.dart';

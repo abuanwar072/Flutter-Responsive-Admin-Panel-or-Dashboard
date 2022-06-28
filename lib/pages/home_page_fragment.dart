@@ -1,4 +1,4 @@
-import 'package:admin/constants.dart';
+import 'package:admin/config/constants.dart';
 import 'package:admin/reusable_widgets/reusable_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

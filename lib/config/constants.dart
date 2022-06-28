@@ -19,4 +19,6 @@ Map<String, Widget Function(BuildContext)> routes = {
   '/add_edit_employee': (context) => AddEditEmployeeScreen(),
   '/add_edit_person': (context) => AddEditPersonScreen(),
   '/add_donation_campaign': (context) => AddDonationCampaignScreen(),
+  '/active_don_camps_screen': (context) => ActiveDonCampsScreen(),
+  '/completed_don_camps_screen': (context) => CompletedDonCampsScreen(),
 };

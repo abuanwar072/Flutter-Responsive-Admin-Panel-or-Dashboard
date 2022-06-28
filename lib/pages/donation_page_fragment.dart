@@ -1,5 +1,4 @@
-import 'package:admin/constants.dart';
-import 'package:admin/controllers/navigation/navigation_bloc.dart';
+import 'package:admin/config/constants.dart';
 import 'package:admin/reusable_widgets/reusable_widgets.dart';
 import 'package:admin/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -79,7 +78,8 @@ class DonationPageFragment extends StatelessWidget {
                         child: _DataCard(
                           onPressed: () async {
                             // GO TO ACTIVE DONATION CAMPAIGNS PAGE
-                            await context.setLocale(Locale('ar'));
+                            Navigator.pushNamed(
+                                context, ActiveDonCampsScreen.routeName());
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -109,8 +109,8 @@ class DonationPageFragment extends StatelessWidget {
                         child: _DataCard(
                           onPressed: () async {
                             // GO TO COMPLETED DONATION CAMPAIGNS PAGE
-                            // TODO: REMOVE THIS
-                            await context.setLocale(Locale('en'));
+                            Navigator.pushNamed(
+                                context, CompletedDonCampsScreen.routeName());
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -286,12 +286,10 @@ class _DataCard extends StatelessWidget {
     Key? key,
     required this.child,
     this.onPressed,
-    this.onLongPress,
   }) : super(key: key);
 
   final Widget child;
   final VoidCallback? onPressed;
-  final VoidCallback? onLongPress;
 
   @override
   Widget build(BuildContext context) {
@@ -299,7 +297,6 @@ class _DataCard extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(10)),
       child: Material(
         child: InkWell(
-          onLongPress: onLongPress,
           onTap: onPressed,
           child: Ink(
             padding: const EdgeInsets.symmetric(

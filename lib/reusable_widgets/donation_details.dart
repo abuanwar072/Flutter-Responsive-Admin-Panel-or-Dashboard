@@ -1,4 +1,4 @@
-import 'package:admin/constants.dart';
+import 'package:admin/config/constants.dart';
 import 'package:admin/reusable_widgets/details_info_card.dart';
 import 'package:admin/screens/main/components/chart.dart';
 import 'package:easy_localization/easy_localization.dart';

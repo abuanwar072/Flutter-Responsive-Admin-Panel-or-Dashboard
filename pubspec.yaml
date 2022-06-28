@@ -39,6 +39,8 @@ dependencies:
   provider: ^6.0.2
   jiffy: ^5.0.0
   image_picker: ^0.8.5+3
+  faker_dart: ^0.1.6
+  cached_network_image: ^3.2.1
 
 dev_dependencies:
   flutter_test:

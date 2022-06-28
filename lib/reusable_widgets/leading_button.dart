@@ -1,4 +1,4 @@
-import 'package:admin/constants.dart';
+import 'package:admin/config/constants.dart';
 import 'package:flutter/material.dart';
 
 class LeadingIcon extends StatelessWidget {

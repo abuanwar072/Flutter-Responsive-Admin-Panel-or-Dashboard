@@ -1,4 +1,4 @@
-import 'package:admin/constants.dart';
+import 'package:admin/config/constants.dart';
 import 'package:admin/models/employee.dart';
 import 'package:admin/reusable_widgets/reusable_widgets.dart';
 import 'package:admin/screens/screens.dart';

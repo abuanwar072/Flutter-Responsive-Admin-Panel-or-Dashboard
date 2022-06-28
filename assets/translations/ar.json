@@ -84,7 +84,8 @@
   "sponsorship": {
     "one": "كفالة",
     "few": "{} كفالات",
-    "many": "{} كفالة"
+    "many": "{} كفالة",
+    "other": "{} كفالة"
   },
   "total_employees_num": "عدد الموظفين",
   "total_admins_num": "عدد مسؤولين الجمعية",
@@ -159,5 +160,29 @@
   "num_of_ben": "عدد المستفيدين",
   "pls_select_image": "الرجاء اختيار غلاف الحملة",
   "active_camps": "الحملات النشطة",
-  "completed_camps": "الحملات المكتملة"
+  "completed_camps": "الحملات المكتملة",
+  "discard_don_camp_insertion": "هل أنت متأكد من التراجع عن إضافة حملة جمع تبرّعات جديدة؟",
+  "don_camp_title": "عنوان الحملة",
+  "collected_don": "المبلغ الذي تم جمعه",
+  "active": "نشطة",
+  "completed": "مكتملة",
+  "donations": {
+    "one": "ألف ل.س",
+    "few": "{} آلاف ل.س",
+    "many": "{} ألف ل.س",
+    "other": "{} ألف ل.س"
+  },
+  "cancelled": "ملغية",
+  "don_operations": "عمليات التبرّع",
+  "add_don_op": "تسجيل عملية تبرّع",
+  "donator_type": "نوع المتبرّع",
+  "person": "فرد",
+  "organization": "منظمة",
+  "payment_method": "طريقة الدفع",
+  "donation_date": "تاريخ التبرّع",
+  "paid_amount": "قيمة التبرّع",
+  "payment_id": "رقم عملية التبرّع",
+  "don_camp": "حملة التبرّع",
+  "sup_org": "المنظمة الداعمة",
+  "the_donator": "المتبرّع"
 }

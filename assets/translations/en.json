@@ -19,7 +19,8 @@
     "one": "Donator",
     "many": "{} Donators",
     "other": "{} Donators",
-    "few": ""
+    "few": "{} Donators",
+    "two": "2 Donators"
   },
   "volunteer_person": {
     "zero": "No Volunteers",
@@ -54,18 +55,18 @@
     "other": "{} Admins"
   },
   "amount": {
-    "zero": "{} millon sp",
+    "zero": "{} million sp",
     "one": "One million sp",
     "many": "{} millions sp",
     "other": "{} millions sp",
     "few": "{} million sp"
   },
   "total": {
-    "zero": "millon sp",
+    "zero": "million sp",
     "one": "million sp",
     "many": "millions sp",
     "other": "millions sp",
-    "few": ""
+    "few": "millions sp"
   },
   "active_operation": "Active Operations",
   "donation_op": "Donation Campaigns",
@@ -81,10 +82,10 @@
     "other": "{} campaigns"
   },
   "sponsorship": {
-    "one": "sposorship",
-    "few": "{} sposorships",
-    "many": "{} sposorships",
-    "other": "{} sposorships"
+    "one": "sponsorship",
+    "few": "{} sponsorships",
+    "many": "{} sponsorships",
+    "other": "{} sponsorships"
   },
   "total_employees_num": "Number of Employees",
   "total_admins_num": "Number of Admins",
@@ -159,5 +160,29 @@
   "num_of_ben": "Number of beneficiaries",
   "pls_select_image": "Please select campaign cover",
   "active_camps": "Active Campaigns",
-  "completed_camps": "Completed Campaigns"
+  "completed_camps": "Completed Campaigns",
+  "discard_don_camp_insertion": "Are you sure to undo adding a new donation campaign?",
+  "don_camp_title": "Campaign Title",
+  "collected_don": "Collected Donations",
+  "active": "Active",
+  "completed": "Completed",
+  "donations": {
+    "one": "One thousand sp",
+    "few": "{} thousand sp",
+    "many": "{} thousands sp",
+    "other": "{} thousands sp"
+  },
+  "cancelled": "Cancelled",
+  "don_operations": "Donation Operations",
+  "add_don_op": "Register a donatoion operation",
+  "donator_type": "Donator Type",
+  "person": "Person",
+  "organization": "Organization",
+  "payment_method": "Payment method",
+  "donation_date": "Donation date",
+  "paid_amount": "Donation amount",
+  "payment_id": "Payment ID",
+  "don_camp": "Donation campaign",
+  "sup_org": "Supportive organization",
+  "the_donator": "Donator"
 }
