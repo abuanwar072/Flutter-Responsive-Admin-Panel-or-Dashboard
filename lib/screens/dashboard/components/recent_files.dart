@@ -27,9 +27,12 @@ class RecentFiles extends StatelessWidget {
           ),
           SizedBox(
             width: double.infinity,
+            height: 50*demoRecentFiles.length+1,
             child: DataTable2(
               columnSpacing: defaultPadding,
               minWidth: 600,
+              dataRowHeight: 50,
+              headingRowHeight: 50,
               columns: [
                 DataColumn(
                   label: Text("File Name"),
