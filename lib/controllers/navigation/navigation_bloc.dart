@@ -1,14 +1,12 @@
 import 'package:bloc/bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 part 'navigation_event.dart';
-
 part 'navigation_state.dart';
 
 class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
-  NavigationBloc() : super(HomePageInitialized(pageTitle: 'home')) {
+  NavigationBloc() : super(const HomePageInitialized(pageTitle: 'home')) {
     on(_onNavigateToPage);
   }
 }

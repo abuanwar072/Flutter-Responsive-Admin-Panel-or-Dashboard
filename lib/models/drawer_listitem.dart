@@ -1,5 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
-
 class DrawerListItem {
   final String svgSrc;
   final String titleKey;

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1001953327390",
+    "project_id": "ataa-6870b",
+    "storage_bucket": "ataa-6870b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001953327390:android:4145ea209325d1b860b10f",
+        "android_client_info": {
+          "package_name": "com.ataa.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001953327390-p2nvofn557b2lg5ulijpiaifte0i40h2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWsfem4_kldjys8phrmZfI7T-5b3bsZyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1001953327390-p2nvofn557b2lg5ulijpiaifte0i40h2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

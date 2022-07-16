@@ -1,7 +1,8 @@
 import 'package:admin/config/constants.dart';
+import 'package:admin/config/helper.dart';
 import 'package:admin/models/models.dart';
-import 'package:admin/reusable_widgets/reusable_widgets.dart';
 import 'package:admin/screens/screens.dart';
+import 'package:admin/widgets/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class PersonDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          person.firstName! + ' ' + person.lastName!,
+          tr('person_details'),
           style: Theme.of(context).textTheme.titleMedium,
         ),
         elevation: 0,
@@ -26,35 +27,36 @@ class PersonDetailsScreen extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
           ),
           splashRadius: 20,
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              // todo: go to edit person screen
-              Navigator.pushNamed(
-                context,
-                AddEditPersonScreen.routeName(),
-                arguments: {
-                  'isInAddMode': false,
-                  'person': person,
-                },
-              );
-            },
-            icon: Icon(
-              Icons.edit_note_rounded,
-              color: Colors.black,
+          if (person.terminationDate == null)
+            IconButton(
+              onPressed: () {
+                // todo: go to edit person screen
+                Navigator.pushNamed(
+                  context,
+                  AddEditPersonScreen.routeName(),
+                  arguments: {
+                    'isInAddMode': false,
+                    'person': person,
+                  },
+                );
+              },
+              icon: const Icon(
+                Icons.edit_note_rounded,
+                color: Colors.black,
+              ),
+              splashRadius: 20,
             ),
-            splashRadius: 20,
-          ),
         ],
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(defaultPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -62,101 +64,155 @@ class PersonDetailsScreen extends StatelessWidget {
             DataCard(
               child: Column(
                 children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(person.healthReportUrl!),
+                  const CircleAvatar(
+                    backgroundImage: AssetImage('assets/images/avatar.jpg'),
                     backgroundColor: Colors.transparent,
                     radius: 50,
                   ),
-                  SizedBox(height: defaultPadding),
+                  const SizedBox(height: defaultPadding * 0.5),
                   Text(
                     '${person.firstName!} ${person.lastName!}',
-                    style: TextStyle(color: primaryColor),
+                    style: const TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  SizedBox(height: defaultPadding * 0.5),
-                  Text(
-                    '${tr('personal_id')} : ${person.personId}',
+                  const SizedBox(height: defaultPadding * 0.5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        tr('personal_id'),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${person.personId!}',
+                      ),
+                    ],
                   ),
-                  SizedBox(height: defaultPadding * 0.25),
-                  Text(person.healthStatusAr!), // TODO: CHANGE DUE TO CURRENT LANGUAGE
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        tr('medical_status'),
+                      ),
+                      const SizedBox(width: 4),
+                      Flexible(
+                        child: Text(
+                          Helper.isLocaleArabic(context)
+                              ? person.healthStatusAr!
+                              : person.healthStatusEn!,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
-            SizedBox(height: defaultPadding),
+            const SizedBox(height: defaultPadding),
             DataCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     tr('personal_information'),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                       color: primaryColor,
                     ),
                   ),
-                  SizedBox(height: defaultPadding),
+                  const SizedBox(height: defaultPadding),
                   InformationRow(
                     leading: tr('first_name'),
                     trailing: person.firstName!,
                   ),
-                  SizedBox(height: defaultPadding * .75),
+                  const SizedBox(height: defaultPadding * .75),
                   InformationRow(
                     leading: tr('last_name'),
                     trailing: person.lastName!,
                   ),
-                  SizedBox(height: defaultPadding * .75),
+                  const SizedBox(height: defaultPadding * .75),
                   InformationRow(
                     leading: tr('phone_number'),
                     trailing: person.phoneNumber!,
+                    isTrailingReversed: true,
                   ),
-                  SizedBox(height: defaultPadding * .75),
+                  const SizedBox(height: defaultPadding * .75),
                   InformationRow(
                     leading: tr('age'),
                     trailing: '${person.age!}',
                   ),
-                  SizedBox(height: defaultPadding * .75),
+                  const SizedBox(height: defaultPadding * .75),
                   InformationRow(
                     leading: tr('nat_id_num'),
-                    trailing: '${person.nationalNumber!}',
+                    trailing: person.nationalNumber!,
                   ),
+                  const SizedBox(height: defaultPadding * .75),
+                  InformationRow(
+                    leading: tr('join_date'),
+                    trailing: DateFormat(Helper.isLocaleArabic(context)
+                            ? 'yyyy/MM/dd'
+                            : 'dd/MM/yyyy')
+                        .format(DateTime.parse(person.joinDate!)),
+                  ),
+                  if (person.terminationDate != null) ...[
+                    const SizedBox(height: defaultPadding * .75),
+                    InformationRow(
+                      leading: tr('termination_date'),
+                      trailing: DateFormat(Helper.isLocaleArabic(context)
+                              ? 'yyyy/MM/dd'
+                              : 'dd/MM/yyyy')
+                          .format(DateTime.parse(person.terminationDate!)),
+                    ),
+                  ],
                 ],
               ),
             ),
-            SizedBox(height: defaultPadding),
+            const SizedBox(height: defaultPadding),
             DataCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     tr('address'),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                       color: primaryColor,
                     ),
                   ),
-                  SizedBox(height: defaultPadding),
+                  const SizedBox(height: defaultPadding),
                   InformationRow(
                     leading: tr('state'),
-                    trailing: person.state!,
+                    trailing: Helper.isLocaleArabic(context)
+                        ? person.stateAr!
+                        : person.stateEn!,
+                  ),
+                  const SizedBox(height: defaultPadding),
+                  InformationRow(
+                    leading: tr('city'),
+                    trailing: Helper.isLocaleArabic(context)
+                        ? person.cityAr!
+                        : person.cityAr!,
                   ),
                 ],
               ),
             ),
-            SizedBox(height: defaultPadding),
+            const SizedBox(height: defaultPadding),
             DataCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     tr('official_docs'),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                       color: primaryColor,
                     ),
                   ),
-                  SizedBox(height: defaultPadding),
+                  const SizedBox(height: defaultPadding),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -166,13 +222,18 @@ class PersonDetailsScreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          // todo: implement downloading the health report to user's device
+                          // GO TO PDF VIEWER TO SHOW HEALTH REPORT
+                          Navigator.pushNamed(
+                            context,
+                            PDFViewerScreen.routeName(),
+                            arguments: person.healthReportUrl,
+                          );
                         },
                         style:
                             TextButton.styleFrom(backgroundColor: primaryColor),
                         child: Text(
                           tr('download'),
-                          style: TextStyle(color: secondaryColor),
+                          style: const TextStyle(color: secondaryColor),
                         ),
                       ),
                     ],

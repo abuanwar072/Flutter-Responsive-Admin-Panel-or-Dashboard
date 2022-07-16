@@ -1,3 +1,9 @@
 export 'employee.dart';
 export 'person.dart';
 export 'donation_campaign.dart';
+export 'donation_operation.dart';
+export 'supportive_organization.dart';
+export 'request.dart';
+export 'spon_request.dart';
+export 'gift_request.dart';
+export 'volunteer_request.dart';

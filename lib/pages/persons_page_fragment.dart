@@ -1,67 +1,29 @@
 import 'package:admin/config/constants.dart';
+import 'package:admin/controllers/mixins/dialog_provider.dart';
+import 'package:admin/controllers/persons/persons_bloc.dart';
 import 'package:admin/models/models.dart';
-import 'package:admin/reusable_widgets/reusable_widgets.dart';
-import 'package:admin/reusable_widgets/search_field.dart';
 import 'package:admin/screens/screens.dart';
+import 'package:admin/widgets/search_field.dart';
+import 'package:admin/widgets/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:toast/toast.dart';
 
-class PersonsPageFragment extends StatelessWidget {
-  const PersonsPageFragment({
+class PersonsPageFragment extends StatelessWidget with DialogProvider {
+  PersonsPageFragment({
     Key? key,
   }) : super(key: key);
-  final personsCount = 2358;
 
-  Future<bool> _showDeleteWarningDialogue(context) async {
-    return await showDialog(
-          // show confirm dialogue
-          // the return value will be from "Yes" or "No" options
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text(
-              'warning',
-              style: TextStyle(color: Colors.red),
-            ).tr(),
-            content: Text(
-              'delete_person_warning',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ).tr(),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                //return false when click on "NO"
-                child: Text('no', style: Theme.of(context).textTheme.bodyLarge)
-                    .tr(),
-                style: ButtonStyle(
-                  overlayColor: MaterialStateColor.resolveWith(
-                    (states) => Colors.red.withOpacity(0.1),
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                //return true when click on "Yes"
-                child: Text('yes', style: Theme.of(context).textTheme.bodyLarge)
-                    .tr(),
-                style: ButtonStyle(
-                  overlayColor: MaterialStateColor.resolveWith(
-                    (states) => primaryColor.withOpacity(0.1),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ) ??
-        false; // if showDialogue had returned null, then return false
-  }
+  final ValueNotifier<String?> searchQuery = ValueNotifier<String?>(null);
 
   @override
   Widget build(BuildContext context) {
-    final faker.Faker _faker = faker.Faker();
+    // INITIALIZE TOAST
+    ToastContext().init(context);
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
         CustomAppBar(
@@ -77,86 +39,174 @@ class PersonsPageFragment extends StatelessWidget {
             icon: Icons.add_rounded,
           ),
         ),
-        SizedBox(height: defaultPadding),
-        SearchField(),
-        SizedBox(height: defaultPadding * 0.5),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.765,
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: StaggeredGrid.count(
-              crossAxisSpacing: 8,
-              crossAxisCount: 2,
-              children: [
-                StaggeredGridTile.count(
-                  crossAxisCellCount: 2,
-                  mainAxisCellCount: 0.25,
-                  child: _DataCard(
-                    child: _InfoRow(
-                      leading: tr('persons_count_title'),
-                      trailing: plural('persons_count', personsCount),
-                      leadingColor: primaryColor,
-                    ),
-                  ),
-                ),
-                StaggeredGridTile.count(
-                  crossAxisCellCount: 2,
-                  mainAxisCellCount: 0.05,
-                  child: SizedBox(),
-                ),
-                for (int i = 0; i < 70; i++)
-                  StaggeredGridTile.count(
-                    crossAxisCellCount: 1,
-                    mainAxisCellCount: 1,
-                    child: PersonCard(
-                      onLongPress: () async {
-                        final deleteConfirmed =
-                            await _showDeleteWarningDialogue(context);
-                        if (deleteConfirmed) {
-                          // todo: delete confirmed, so delete the person data
-                        }
-                      },
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          PersonDetailsScreen.routeName(),
-                          arguments: Person(
-                            personId: i,
-                            healthStatusAr: _faker.randomGenerator.string(10),
-                            healthStatusEn: _faker.randomGenerator.string(10),
-                            firstName: _faker.person.firstName(),
-                            lastName: _faker.person.lastName(),
-                            phoneNumber: _faker.phoneNumber.us(),
-                            state: _faker.address.state(),
-                            nationalNumber:
-                                _faker.randomGenerator.numberOfLength(12),
-                            birthDate: _faker.date
-                                .dateTime(minYear: 1990, maxYear: 2015),
-                            healthReportUrl: _faker.image.image(),
+        const SizedBox(height: defaultPadding),
+        SearchField(
+          onSearch: (query) {
+            searchQuery.value = query;
+          },
+        ),
+        const SizedBox(height: defaultPadding * 0.5),
+        RefreshIndicator(
+          triggerMode: RefreshIndicatorTriggerMode.anywhere,
+          color: primaryColor,
+          onRefresh: () async {
+            // CLEAR SEARCH QUERY
+            searchQuery.value = null;
+
+            // CALL GET EMPLOYEES BLOC EVENT
+            BlocProvider.of<PersonsBloc>(context)
+                .add(GetPersonsWithSpecialNeeds());
+          },
+          child: NotificationListener<OverscrollIndicatorNotification>(
+            onNotification: (overscroll) {
+              overscroll.disallowIndicator();
+              return true;
+            },
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: BlocConsumer<PersonsBloc, PersonsState>(
+                  listener: (context, state) {
+                    if (state is PersonsLoading) {
+                      showLoadingDialoge(context);
+                    } else {
+                      Navigator.pop(context);
+                    }
+
+                    // TO GET LATEST VERSION OF DATA FROM SERVER
+                    // if (state is PersonAdded ||
+                    //     state is PersonUpdated ||
+                    //     state is PersonTerminated) {
+                    //   context.read<PersonsBloc>().add(GetPersonsWithSpecialNeeds());
+                    // }
+                  },
+                  builder: (context, state) {
+                    if (state is PersonsLoading) {
+                      return const SizedBox();
+                    }
+                    if (state is PersonsError) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        child: Center(
+                          child: UnexpectedErrorWidget(
+                            onRetryPressed: () {
+                              context
+                                  .read<PersonsBloc>()
+                                  .add(GetPersonsWithSpecialNeeds());
+                            },
                           ),
+                        ),
+                      );
+                    }
+                    if (state is PersonsLoaded) {
+                      if (state.persons.isEmpty) {
+                        return NoDataWidget(
+                          onRefreshPressed: () {
+                            context
+                                .read<PersonsBloc>()
+                                .add(GetPersonsWithSpecialNeeds());
+                          },
+                          message: tr('no_persons'),
                         );
-                      },
-                      person: Person(
-                        personId: i,
-                        healthStatusAr: _faker.randomGenerator.string(10),
-                        healthStatusEn: _faker.randomGenerator.string(10),
-                        firstName: _faker.person.firstName(),
-                        lastName: _faker.person.lastName(),
-                        phoneNumber: _faker.phoneNumber.us(),
-                        state: _faker.address.state(),
-                        nationalNumber:
-                            _faker.randomGenerator.numberOfLength(12),
-                        birthDate:
-                            _faker.date.dateTime(minYear: 1990, maxYear: 2015),
-                        healthReportUrl: _faker.image.image(),
-                      ),
-                    ),
-                  ),
-              ],
+                      }
+                      return ValueListenableBuilder<String?>(
+                        valueListenable: searchQuery,
+                        builder: (context, query, _) {
+                          // Filter persons by query
+                          final filteredPersons = query == null
+                              ? state.persons
+                              : state.persons
+                                  .where((person) =>
+                                      person.firstName!
+                                          .toLowerCase()
+                                          .contains(query) ||
+                                      person.lastName!
+                                          .toLowerCase()
+                                          .contains(query) ||
+                                      person.nationalNumber!.contains(query) ||
+                                      person.age!.toString().contains(query) ||
+                                      person.healthStatusAr!.contains(query) ||
+                                      person.healthStatusEn!.contains(query) ||
+                                      person.stateAr!.contains(query) ||
+                                      person.stateEn!.contains(query) ||
+                                      person.cityAr!.contains(query) ||
+                                      person.cityEn!.contains(query))
+                                  .toList();
+                          return _buildPersonsList(context, filteredPersons);
+                        },
+                      );
+                    }
+                    return const SizedBox();
+                  },
+                ),
+              ),
             ),
           ),
         ),
       ],
+    );
+  }
+
+  _buildPersonsList(BuildContext context, List<Person> persons) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.765,
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: StaggeredGrid.count(
+          crossAxisSpacing: 8,
+          crossAxisCount: 2,
+          children: [
+            // SHOW THE NUMBER OF REGISTERED PERSONS IN THE SYSTEM
+            StaggeredGridTile.count(
+              crossAxisCellCount: 2,
+              mainAxisCellCount: 0.25,
+              child: _DataCard(
+                child: _InfoRow(
+                  leading: tr('persons_count_title'),
+                  trailing: plural(
+                      'persons_count',
+                      persons
+                          .where((element) => element.terminationDate == null)
+                          .length),
+                  leadingColor: primaryColor,
+                ),
+              ),
+            ),
+
+            // SHOW THE CARDs FOR EACH PERSON IN THE SYSTEM
+            const StaggeredGridTile.count(
+              crossAxisCellCount: 2,
+              mainAxisCellCount: 0.05,
+              child: SizedBox(),
+            ),
+            for (int index = 0; index < persons.length; index++)
+              StaggeredGridTile.count(
+                crossAxisCellCount: 1,
+                mainAxisCellCount: 1,
+                child: PersonCard(
+                  onLongPress: () async {
+                    final isTerminated =
+                        await showDeleteWarningDialogue(context);
+                    if (isTerminated) {
+                      context.read<PersonsBloc>().add(
+                          TerminatePersonWithSpecialNeeds(
+                              person: persons[index]));
+                    }
+                  },
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      PersonDetailsScreen.routeName(),
+                      arguments: persons[index],
+                    );
+                  },
+                  person: persons[index],
+                ),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -185,19 +235,32 @@ class PersonCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Flexible(
-              child: CircleAvatar(
-                backgroundImage: AssetImage('assets/images/avatar.jpg'),
-                backgroundColor: Colors.transparent,
-                radius: 40,
+              child: Stack(
+                children: [
+                  const CircleAvatar(
+                    backgroundImage: AssetImage('assets/images/avatar.jpg'),
+                    backgroundColor: Colors.transparent,
+                    radius: 40,
+                  ),
+                  if (person.terminationDate == null)
+                    const Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Icon(
+                        Icons.verified_user_rounded,
+                        color: primaryColor,
+                      ),
+                    ),
+                ],
               ),
             ),
-            SizedBox(height: defaultPadding * 0.5),
+            const SizedBox(height: defaultPadding * 0.5),
             Text(
               '${person.firstName} ${person.lastName}',
-              style: TextStyle(color: primaryColor),
+              style: const TextStyle(color: primaryColor),
             ),
             Text(
-              '${tr('personal_id')} : ${person.personId}',
+              '${tr('personal_id')} ${person.personId}',
               style: Theme.of(context).textTheme.bodySmall,
             ),
             Text(
@@ -210,7 +273,6 @@ class PersonCard extends StatelessWidget {
     );
   }
 }
-
 
 class _DataCard extends StatelessWidget {
   const _DataCard({
@@ -237,9 +299,9 @@ class _DataCard extends StatelessWidget {
               vertical: defaultPadding * 0.5,
               horizontal: defaultPadding,
             ),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: secondaryColor,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             child: child,
           ),

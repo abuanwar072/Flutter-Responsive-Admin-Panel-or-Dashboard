@@ -1,10 +1,21 @@
-import 'package:admin/config/constants.dart';
-import 'package:admin/models/employee.dart';
-import 'package:admin/reusable_widgets/reusable_widgets.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class AddEditEmployeeScreen extends StatelessWidget {
+import 'package:admin/config/constants.dart';
+import 'package:admin/controllers/employees/employees_bloc.dart';
+import 'package:admin/controllers/file/file_bloc.dart';
+import 'package:admin/controllers/mixins/mixins.dart';
+import 'package:admin/controllers/validation/validation_mixin.dart';
+import 'package:admin/models/employee.dart';
+import 'package:admin/widgets/widgets.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path/path.dart';
+
+class AddEditEmployeeScreen extends StatelessWidget
+    with ValidationProvider, DialogProvider, FieldProvider {
   static String routeName() => '/add_edit_employee';
 
   AddEditEmployeeScreen({Key? key}) : super(key: key);
@@ -13,67 +24,100 @@ class AddEditEmployeeScreen extends StatelessWidget {
   final _lastNameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
-  final _stateController = TextEditingController();
-  final _cityController = TextEditingController();
+  final _stateEnController = TextEditingController();
+  final _stateArController = TextEditingController();
+  final _cityEnController = TextEditingController();
+  final _cityArController = TextEditingController();
   final _passwordController = TextEditingController();
 
   final ValueNotifier<bool> isEmpAdmin = ValueNotifier(false);
-  final ValueNotifier<String> resumeFileName = ValueNotifier('');
+  final ValueNotifier<String?> resumeFileName = ValueNotifier(null);
 
-  final DateTime startDate = DateTime.now();
+  // STORES THE FILE STORED URL
+  final ValueNotifier<String?> resumeFileUrl = ValueNotifier(null);
+
+  // TO HANDLE IF THE RESUME HAS BEEN CHANGED
+  final ValueNotifier<bool> resumeChanged = ValueNotifier(false);
 
   _fillEmployeeData(Employee emp) {
     _firstNameController.text = emp.firstName!;
     _lastNameController.text = emp.lastName!;
     _phoneController.text = emp.phoneNumber!;
     _emailController.text = emp.email!;
-    _stateController.text = emp.state!;
-    _cityController.text = emp.cityName!;
+    _stateEnController.text = emp.stateEn!;
+    _stateArController.text = emp.stateAr!;
+    _cityEnController.text = emp.cityEn!;
+    _cityArController.text = emp.cityAr!;
 
     isEmpAdmin.value = emp.isAdmin!;
-    resumeFileName.value = emp.resumeFileName!;
+    resumeFileName.value = emp.cvFileUrl;
   }
 
-  Future<bool> _showExitPopup(context, isInAddMode) async {
-    return await showDialog(
-          // show confirm dialogue
-          // the return value will be from "Yes" or "No" options
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('discard_changes').tr(),
-            content: Text(
-              isInAddMode
-                  ? 'discard_employee_insertion'
-                  : 'discard_employee_update',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ).tr(),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                //return false when click on "NO"
-                child: Text('no', style: Theme.of(context).textTheme.bodyLarge)
-                    .tr(),
-                style: ButtonStyle(
-                  overlayColor: MaterialStateColor.resolveWith(
-                    (states) => Colors.red.withOpacity(0.1),
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                //return true when click on "Yes"
-                child: Text('yes', style: Theme.of(context).textTheme.bodyLarge)
-                    .tr(),
-                style: ButtonStyle(
-                  overlayColor: MaterialStateColor.resolveWith(
-                    (states) => primaryColor.withOpacity(0.1),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ) ??
-        false; // if showDialogue had returned null, then return false
+  _uploadFile(context) {
+    if (resumeChanged.value && resumeFileName.value != null) {
+      BlocProvider.of<FileBloc>(context).add(
+        UploadFile(
+          file: File(resumeFileName.value!),
+          fileName: basename(resumeFileName.value!),
+        ),
+      );
+    }
+  }
+
+  // SEND EMPLOYEE TO SERVER
+  Future<void> _storeEmployee(BuildContext context, String docUrl) async {
+    BlocProvider.of<EmployeesBloc>(context).add(
+      StoreEmployee(
+        employee: Employee(
+          firstName: _firstNameController.text.trim(),
+          lastName: _lastNameController.text.trim(),
+          phoneNumber: _phoneController.text,
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+          cityEn: _cityEnController.text.trim(),
+          cityAr: _cityArController.text.trim(),
+          stateAr: _stateArController.text.trim(),
+          stateEn: _stateEnController.text.trim(),
+          cvFileUrl: docUrl,
+          isAdmin: isEmpAdmin.value,
+        ),
+      ),
+    );
+  }
+
+  // UPDATE EMPLOYEE IN SERVER
+  Future<void> _updateEmployee(
+      BuildContext context, String docUrl, Employee emp) async {
+    BlocProvider.of<EmployeesBloc>(context).add(
+      UpdateEmployee(
+        employee: Employee(
+          empId: emp.empId,
+          firstName: _firstNameController.text.trim(),
+          lastName: _lastNameController.text.trim(),
+          phoneNumber: _phoneController.text,
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+          cityEn: _cityEnController.text.trim(),
+          cityAr: _cityArController.text.trim(),
+          stateEn: _stateEnController.text.trim(),
+          stateAr: _stateArController.text.trim(),
+          cvFileUrl: docUrl,
+          isAdmin: isEmpAdmin.value,
+        ),
+      ),
+    );
+  }
+
+  // A HELPER FUNCTION TO OPEN FILE PICKER TO PICK A PDF FILE AND STORE IT'S PATH IN THE RESUME FILE NAME VALUE NOTIFIER
+  Future<void> _pickFile() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+    if (result != null) {
+      resumeFileName.value = result.files.single.path;
+      resumeChanged.value = true;
+    }
   }
 
   @override
@@ -84,7 +128,7 @@ class AddEditEmployeeScreen extends StatelessWidget {
     final isInAddMode = data['isInAddMode'];
     return WillPopScope(
       onWillPop: () {
-        return _showExitPopup(context, isInAddMode);
+        return showExitPopup(context);
       },
       child: Scaffold(
         appBar: AppBar(
@@ -98,10 +142,10 @@ class AddEditEmployeeScreen extends StatelessWidget {
 
           // Back Button
           leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
+            onPressed: () async {
+              if (await showExitPopup(context)) Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.black,
             ),
@@ -111,8 +155,28 @@ class AddEditEmployeeScreen extends StatelessWidget {
             IconButton(
               onPressed: () {
                 // todo: perform update functionality
+
+                if (isInAddMode) {
+                  // START UPLOADING FILES THEN SEND EMPLOYEE TO SERVER
+                  if (_formKey.currentState!.validate() &&
+                      resumeFileName.value != null) {
+                    _uploadFile(context);
+                  }
+                } else {
+                  // UPDATE EMPLOYEE IN SERVER
+                  if (_formKey.currentState!.validate() &&
+                      resumeFileName.value != null) {
+                    if (resumeChanged.value) {
+                      _uploadFile(context);
+                    } else {
+                      _updateEmployee(context, emp!.cvFileUrl!, emp);
+                      int count = 0;
+                      Navigator.of(context).popUntil((_) => count++ >= 2);
+                    }
+                  }
+                }
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.check_circle_outline_rounded,
                 color: Colors.black,
               ),
@@ -120,295 +184,403 @@ class AddEditEmployeeScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                DataCard(
-                  child: Padding(
-                    padding: const EdgeInsets.all(defaultPadding * 0.5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          tr('personal_information'),
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: primaryColor,
-                          ),
-                        ),
-                        SizedBox(height: defaultPadding),
-                        _buildTextFormField(
-                          context: context,
-                          hintText: tr('first_name'),
-                          controller: _firstNameController,
-                          keyboardType: TextInputType.name,
-                          validator: (content) {
-                            return null;
-                          },
-                        ),
-                        SizedBox(height: defaultPadding * 0.5),
-                        _buildTextFormField(
-                          context: context,
-                          hintText: tr('last_name'),
-                          controller: _lastNameController,
-                          keyboardType: TextInputType.name,
-                          validator: (content) {
-                            return null;
-                          },
-                        ),
-                        SizedBox(height: defaultPadding * 0.5),
-                        _buildTextFormField(
-                          context: context,
-                          hintText: tr('phone_number'),
-                          controller: _phoneController,
-                          keyboardType: TextInputType.phone,
-                          validator: (content) {
-                            return null;
-                          },
-                        ),
-                        SizedBox(height: defaultPadding * 0.5),
-                        _buildTextFormField(
-                          context: context,
-                          hintText: tr('email'),
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (content) {
-                            return null;
-                          },
-                        ),
-                        if (emp == null)
-                          Column(
-                            children: [
-                              SizedBox(height: defaultPadding * 0.5),
-                              _buildTextFormField(
-                                context: context,
-                                hintText: tr('password'),
-                                isPasswordField: true,
-                                keyboardType: TextInputType.visiblePassword,
-                                controller: _passwordController,
-                                validator: (content) {
-                                  return null;
-                                },
-                              ),
-                            ],
-                          ),
-                        SizedBox(height: defaultPadding * 0.5)
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: defaultPadding),
-                DataCard(
-                  child: Padding(
-                    padding: const EdgeInsets.all(defaultPadding * 0.5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          tr('address'),
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: primaryColor,
-                          ),
-                        ),
-                        SizedBox(height: defaultPadding),
-                        _buildTextFormField(
-                          context: context,
-                          hintText: tr('state'),
-                          controller: _stateController,
-                          keyboardType: TextInputType.name,
-                          validator: (content) {
-                            return null;
-                          },
-                        ),
-                        SizedBox(height: defaultPadding * 0.5),
-                        _buildTextFormField(
-                          context: context,
-                          hintText: tr('city'),
-                          controller: _cityController,
-                          keyboardType: TextInputType.name,
-                          validator: (content) {
-                            return null;
-                          },
-                        ),
-                        SizedBox(height: defaultPadding * 0.5),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: defaultPadding),
-                DataCard(
-                  child: Padding(
-                    padding: const EdgeInsets.all(defaultPadding * 0.5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          tr('emp_data'),
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: primaryColor,
-                          ),
-                        ),
-                        SizedBox(height: defaultPadding),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: defaultPadding * 0.5,
-                              ),
-                              child: Text(
-                                tr('role'),
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
+        body: BlocListener<FileBloc, FileState>(
+          listener: (context, state) {
+            if (state is FileUploading) {
+              showLoadingDialoge(context,'assets/animations/uploading_animation.json');
+            }
+            if (state is FileUploaded) {
+              // ! TO CLOSE THE LOADING DIALOG
+              Navigator.pop(context);
+              if (isInAddMode) {
+                // ! SEND EMPLOYEE TO SERVER
+                _storeEmployee(context, state.url);
+              } else {
+                // ! SEND EMPLOYEE TO SERVER
+                _updateEmployee(
+                  context,
+                  state.url,
+                  emp!,
+                );
+              }
+
+              // ! GO TO EMPLOYEES SCREEN
+              if (!isInAddMode) {
+                int count = 0;
+                Navigator.of(context).popUntil((_) => count++ >= 2);
+              } else {
+                Navigator.pop(context);
+              }
+            }
+
+            if (state is FileFaliure) {
+              Navigator.pop(context);
+            }
+          },
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.all(defaultPadding),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  DataCard(
+                    child: Padding(
+                      padding: const EdgeInsets.all(defaultPadding * 0.5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            tr('personal_information'),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: primaryColor,
                             ),
-                            SizedBox(
-                              width: 120,
-                              child: ValueListenableBuilder(
-                                valueListenable: isEmpAdmin,
-                                builder: (context, bool value, _) {
-                                  print(value);
-                                  return DropdownButtonFormField<bool>(
-                                    value: value,
-                                    alignment: AlignmentDirectional.center,
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.transparent,
-                                      filled: true,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                    ),
-                                    items: [
-                                      DropdownMenuItem(
-                                        value: false,
-                                        child: Text(
-                                          tr('employee_role'),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall,
-                                        ),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: true,
-                                        child: Text(
-                                          tr('admin_role'),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall,
-                                        ),
-                                      ),
-                                    ],
-                                    onChanged: (isAdmin) {
-                                      isEmpAdmin.value = isAdmin!;
+                          ),
+                          const SizedBox(height: defaultPadding),
+                          buildTextFormField(
+                            context: context,
+                            hintText: tr('first_name'),
+                            controller: _firstNameController,
+                            keyboardType: TextInputType.name,
+                            validator: (content) {
+                              if (content == null || content.isEmpty) {
+                                return tr('required');
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: defaultPadding * 0.5),
+                          buildTextFormField(
+                            context: context,
+                            hintText: tr('last_name'),
+                            controller: _lastNameController,
+                            keyboardType: TextInputType.name,
+                            validator: (content) {
+                              if (content == null || content.isEmpty) {
+                                return tr('required');
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: defaultPadding * 0.5),
+                          buildTextFormField(
+                            context: context,
+                            hintText: tr('phone_number'),
+                            controller: _phoneController,
+                            keyboardType: TextInputType.phone,
+                            isFieldReversed: true,
+                            validator: (content) {
+                              if (content == null || content.isEmpty) {
+                                return tr('required');
+                              }
+
+                              if (!validatePhoneNumber(content)) {
+                                return tr('invalid_phone_number');
+                              }
+
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: defaultPadding * 0.5),
+                          BlocBuilder<EmployeesBloc, EmployeesState>(
+                            builder: (context, state) {
+                              if (state is EmployeesFailure) {
+                                if (state.message == 'EMAIL IS ALREADY USED') {
+                                  return buildTextFormField(
+                                    context: context,
+                                    hintText: tr('email'),
+                                    controller: _emailController,
+                                    keyboardType: TextInputType.emailAddress,
+                                    errorMessage: tr('email_is_used'),
+                                    isFieldReversed: true,
+                                    validator: (content) {
+                                      if (content == null || content.isEmpty) {
+                                        return tr('required');
+                                      }
+                                      if (!validateEmailAddress(content)) {
+                                        return tr('invalid_email');
+                                      }
+                                      return null;
                                     },
                                   );
+                                }
+                              }
+                              return buildTextFormField(
+                                context: context,
+                                hintText: tr('email'),
+                                controller: _emailController,
+                                keyboardType: TextInputType.emailAddress,
+                                isFieldReversed: true,
+                                validator: (content) {
+                                  if (content == null || content.isEmpty) {
+                                    return tr('required');
+                                  }
+                                  if (!validateEmailAddress(content)) {
+                                    return tr('invalid_email');
+                                  }
+                                  return null;
                                 },
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(height: defaultPadding * 0.5),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: defaultPadding * 0.5,
+                              );
+                            },
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                tr('resume'),
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  // todo: impelement downloading the resume to user's device
-                                },
-                                style: TextButton.styleFrom(
-                                    backgroundColor: primaryColor),
-                                child: Text(
-                                  tr('select'),
-                                  style: TextStyle(color: secondaryColor),
+                          if (emp == null)
+                            Column(
+                              children: [
+                                const SizedBox(height: defaultPadding * 0.5),
+                                buildTextFormField(
+                                  context: context,
+                                  hintText: tr('password'),
+                                  isPasswordField: true,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  controller: _passwordController,
+                                  validator: (content) {
+                                    if (content == null || content.isEmpty) {
+                                      return tr('required');
+                                    }
+                                    if (content.length < 8) {
+                                      return tr('password_too_short');
+                                    }
+                                    return null;
+                                  },
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: defaultPadding),
-                        ValueListenableBuilder(
-                          valueListenable: resumeFileName,
-                          builder: (contxt, String fileName, _) {
-                            return Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                fileName.isEmpty
-                                    ? tr('please_select_a_resume')
-                                    : fileName,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(
-                                        color: fileName.isEmpty
-                                            ? Colors.red
-                                            : Colors.blue.shade900),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                              ],
+                            ),
+                          const SizedBox(height: defaultPadding * 0.5)
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: defaultPadding),
+                  DataCard(
+                    child: Padding(
+                      padding: const EdgeInsets.all(defaultPadding * 0.5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            tr('address_ar'),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: primaryColor,
+                            ),
+                          ),
+                          const SizedBox(height: defaultPadding),
+                          buildTextFormField(
+                            context: context,
+                            hintText: tr('state_ar'),
+                            controller: _stateArController,
+                            keyboardType: TextInputType.name,
+                            validator: (content) {
+                              if (content == null || content.isEmpty) {
+                                return tr('required');
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: defaultPadding * 0.5),
+                          buildTextFormField(
+                            context: context,
+                            hintText: tr('city_ar'),
+                            controller: _cityArController,
+                            keyboardType: TextInputType.name,
+                            validator: (content) {
+                              if (content == null || content.isEmpty) {
+                                return tr('required');
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: defaultPadding * 0.5),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: defaultPadding),
+                  DataCard(
+                    child: Padding(
+                      padding: const EdgeInsets.all(defaultPadding * 0.5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            tr('address_en'),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: primaryColor,
+                            ),
+                          ),
+                          const SizedBox(height: defaultPadding),
+                          buildTextFormField(
+                            context: context,
+                            hintText: tr('state_en'),
+                            controller: _stateEnController,
+                            keyboardType: TextInputType.name,
+                            isFieldReversed: true,
+                            validator: (content) {
+                              if (content == null || content.isEmpty) {
+                                return tr('required');
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: defaultPadding * 0.5),
+                          buildTextFormField(
+                            context: context,
+                            hintText: tr('city_en'),
+                            controller: _cityEnController,
+                            keyboardType: TextInputType.name,
+                            isFieldReversed: true,
+                            validator: (content) {
+                              if (content == null || content.isEmpty) {
+                                return tr('required');
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: defaultPadding * 0.5),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: defaultPadding),
+                  DataCard(
+                    child: Padding(
+                      padding: const EdgeInsets.all(defaultPadding * 0.5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            tr('emp_data'),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: primaryColor,
+                            ),
+                          ),
+                          const SizedBox(height: defaultPadding),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: defaultPadding * 0.5,
+                                ),
+                                child: Text(
+                                  tr('role'),
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 120,
+                                child: ValueListenableBuilder(
+                                  valueListenable: isEmpAdmin,
+                                  builder: (context, bool value, _) {
+                                    if (kDebugMode) print(value);
+                                    return DropdownButtonFormField<bool>(
+                                      value: value,
+                                      alignment: AlignmentDirectional.center,
+                                      decoration: const InputDecoration(
+                                        fillColor: Colors.transparent,
+                                        filled: true,
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                      ),
+                                      items: [
+                                        DropdownMenuItem(
+                                          value: false,
+                                          child: Text(
+                                            tr('employee_role'),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: true,
+                                          child: Text(
+                                            tr('admin_role'),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          ),
+                                        ),
+                                      ],
+                                      onChanged: (isAdmin) {
+                                        isEmpAdmin.value = isAdmin!;
+                                      },
+                                    );
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: defaultPadding * 0.5),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: defaultPadding * 0.5,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  tr('resume'),
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                ValueListenableBuilder<String?>(
+                                  valueListenable: resumeFileName,
+                                  builder: (context, path, _) {
+                                    return TextButton(
+                                      onPressed: () {
+                                        _pickFile();
+                                      },
+                                      style: TextButton.styleFrom(
+                                          backgroundColor: primaryColor),
+                                      child: Text(
+                                        tr('select'),
+                                        style: const TextStyle(
+                                            color: secondaryColor),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: defaultPadding),
+                          ValueListenableBuilder<String?>(
+                            valueListenable: resumeFileName,
+                            builder: (ctx, String? fileName, _) {
+                              return Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  fileName == null
+                                      ? tr('please_select_a_resume')
+                                      : basename(fileName),
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                          color: fileName == null
+                                              ? Colors.red
+                                              : Colors.blue.shade900),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextFormField({
-    required BuildContext context,
-    required String hintText,
-    required TextEditingController controller,
-    required String? Function(String?)? validator,
-    required TextInputType keyboardType,
-    bool isPasswordField = false,
-  }) {
-    return TextFormField(
-      validator: validator,
-      controller: controller,
-      cursorColor: primaryColor,
-      keyboardType: keyboardType,
-      obscureText: isPasswordField,
-      style:
-          Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.black),
-      decoration: InputDecoration(
-        filled: true,
-        hintStyle: Theme.of(context)
-            .textTheme
-            .bodySmall!
-            .copyWith(color: Theme.of(context).hintColor.withOpacity(0.5)),
-        hintText: hintText,
-        fillColor: Colors.transparent,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            width: 1,
-            color: primaryColor,
-          ),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            width: 1,
-            color: Theme.of(context).hintColor.withOpacity(0.2),
           ),
         ),
       ),

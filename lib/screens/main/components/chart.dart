@@ -26,7 +26,7 @@ class Chart extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: defaultPadding),
+                const SizedBox(height: defaultPadding),
                 Text(
                   '29.1',
                   style: Theme.of(context).textTheme.headline4!.copyWith(
@@ -37,7 +37,7 @@ class Chart extends StatelessWidget {
                 ),
                 Text(
                   'total'.plural(29.1),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black54,
                   ),
                 ),
@@ -58,19 +58,19 @@ List<PieChartSectionData> paiChartSelectionDatas = [
     radius: 25,
   ),
   PieChartSectionData(
-    color: Color(0xFF26E5FF),
+    color: const Color(0xFF26E5FF),
     value: 20,
     showTitle: false,
     radius: 22,
   ),
   PieChartSectionData(
-    color: Color(0xFFFFCF26),
+    color: const Color(0xFFFFCF26),
     value: 10,
     showTitle: false,
     radius: 19,
   ),
   PieChartSectionData(
-    color: Color(0xFFEE2727),
+    color: const Color(0xFFEE2727),
     value: 15,
     showTitle: false,
     radius: 16,

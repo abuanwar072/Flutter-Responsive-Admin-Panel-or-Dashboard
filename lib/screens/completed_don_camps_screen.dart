@@ -1,17 +1,17 @@
-import 'dart:math';
-
 import 'package:admin/config/constants.dart';
+import 'package:admin/controllers/donation_campaigns/donation_campaigns_bloc.dart';
+import 'package:admin/controllers/mixins/dialog_provider.dart';
 import 'package:admin/models/donation_campaign.dart';
-import 'package:admin/reusable_widgets/donation_campaign_card.dart';
+import 'package:admin/screens/screens.dart';
+import 'package:admin/widgets/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:faker_dart/faker_dart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CompletedDonCampsScreen extends StatelessWidget {
+class CompletedDonCampsScreen extends StatelessWidget with DialogProvider {
   CompletedDonCampsScreen({Key? key}) : super(key: key);
 
   static String routeName() => '/completed_don_camps_screen';
-  final _faker = Faker.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -30,47 +30,82 @@ class CompletedDonCampsScreen extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
           ),
           splashRadius: 20,
         ),
-        actions: [],
       ),
-      body: ListView.builder(
-        padding: EdgeInsets.fromLTRB(
-          defaultPadding,
-          defaultPadding,
-          defaultPadding,
-          0,
-        ),
-        physics: BouncingScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return DonationCampaignCard(
-            donationCampaign: DonationCampaign(
-              id: index,
-              titleAr: _faker.lorem.sentence(wordCount: 2),
-              titleEn: _faker.lorem.sentence(wordCount: 2),
-              targetAmount: double.parse(
-                  (Random().nextDouble() * 100).toStringAsFixed(1)),
-              collectedAmount: double.parse(
-                  (Random().nextDouble() * 100).toStringAsFixed(1)),
-              numberOfBeneficiaries: Random().nextInt(1000),
-              coverImageUrl: _faker.image.unsplash.image(),
-              startDate: _faker.date.past(DateTime.now(), rangeInYears: 1),
-              endDate: _faker.date.between(
-                DateTime.now().add(Duration(days: 1)),
-                DateTime.now().add(Duration(days: 60)),
+      body: BlocConsumer<DonationCampaignsBloc, DonationCampaignsState>(
+        listener: (context, state) {
+          if (state is DonationCampaignsLoading) {
+            showLoadingDialoge(context);
+          } else {
+            Navigator.pop(context);
+          }
+        },
+        builder: (context, state) {
+          if (state is DonationCampaignsLoading) {
+            return const SizedBox();
+          }
+          if (state is DonationCampaignsError) {
+            return UnexpectedErrorWidget(
+              onRetryPressed: () {
+                context
+                    .read<DonationCampaignsBloc>()
+                    .add(GetDonationCampaigns());
+              },
+            );
+          }
+          if (state is DonationCampaignsLoaded) {
+            final completedCampaigns = state.donationCampaigns
+                .where((element) =>
+                    element.status != DonationCampaignStatus.active)
+                .toList();
+            if (completedCampaigns.isEmpty) {
+              return NoDataWidget(
+                onRefreshPressed: () {
+                  context
+                      .read<DonationCampaignsBloc>()
+                      .add(GetDonationCampaigns());
+                },
+                message: tr('no_comp_or_cancelled_camps'),
+              );
+            }
+            return RefreshIndicator(
+              triggerMode: RefreshIndicatorTriggerMode.anywhere,
+              color: primaryColor,
+              onRefresh: () async {
+                BlocProvider.of<DonationCampaignsBloc>(context)
+                    .add(GetDonationCampaigns());
+              },
+              child: ListView.builder(
+                padding: const EdgeInsets.fromLTRB(
+                  defaultPadding,
+                  defaultPadding,
+                  defaultPadding,
+                  0,
+                ),
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: completedCampaigns.length,
+                itemBuilder: (context, index) {
+                  return DonationCampaignCard(
+                    donationCampaign: completedCampaigns[index],
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        DonationOperationsScreen.routeName(),
+                        arguments: completedCampaigns[index],
+                      );
+                    },
+                  );
+                },
               ),
-              // SET STATUS RANDOMLY EITHER COMPLETED OR CANCELLED
-              status: Random().nextBool()
-                  ? DonationCampaignStatus.completed
-                  : DonationCampaignStatus.cancelled,
-            ),
-          );
+            );
+          }
+          return const SizedBox();
         },
       ),
     );

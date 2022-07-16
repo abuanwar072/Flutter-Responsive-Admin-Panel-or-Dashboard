@@ -4,39 +4,39 @@ part of 'navigation_bloc.dart';
 abstract class NavigationState extends Equatable {
   final String pageTitle;
 
-  NavigationState({required this.pageTitle});
+  const NavigationState({required this.pageTitle});
   @override
   List<Object?> get props => [pageTitle];
 }
 
 class HomePageInitialized extends NavigationState {
-  HomePageInitialized({required super.pageTitle});
+  const HomePageInitialized({required super.pageTitle});
 }
 
 class EmployeesPageInitialized extends NavigationState {
-  EmployeesPageInitialized({required super.pageTitle});
+  const EmployeesPageInitialized({required super.pageTitle});
 }
 
 class PersonsWithSpecialNeedsPageInitialized extends NavigationState {
-  PersonsWithSpecialNeedsPageInitialized({required super.pageTitle});
+  const PersonsWithSpecialNeedsPageInitialized({required super.pageTitle});
 }
 
 class DonationsPageInitialized extends NavigationState {
-  DonationsPageInitialized({required super.pageTitle});
+  const DonationsPageInitialized({required super.pageTitle});
 }
 
 class VolunteerPageInitialized extends NavigationState {
-  VolunteerPageInitialized({required super.pageTitle});
+  const VolunteerPageInitialized({required super.pageTitle});
 }
 
 class SponsorshipsPageInitialized extends NavigationState {
-  SponsorshipsPageInitialized({required super.pageTitle});
+  const SponsorshipsPageInitialized({required super.pageTitle});
 }
 
 class NotificationsPageInitialized extends NavigationState {
-  NotificationsPageInitialized({required super.pageTitle});
+  const NotificationsPageInitialized({required super.pageTitle});
 }
 
 class SettingsPageInitialized extends NavigationState {
-  SettingsPageInitialized({required super.pageTitle});
+  const SettingsPageInitialized({required super.pageTitle});
 }

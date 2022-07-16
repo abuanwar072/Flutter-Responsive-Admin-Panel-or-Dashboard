@@ -1,5 +1,5 @@
 import 'package:admin/config/constants.dart';
-import 'package:admin/reusable_widgets/reusable_widgets.dart';
+import 'package:admin/widgets/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,22 +21,30 @@ class HomePageFragment extends StatelessWidget {
           ),
         ),
 
-        SizedBox(height: defaultPadding),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.89,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(children: [
+              const SizedBox(height: defaultPadding),
 
-        // All Operation Activated
-        _ActiveOperationDetails(),
-        SizedBox(height: defaultPadding),
+              // All Operation Activated
+              const _ActiveOperationDetails(),
+              const SizedBox(height: defaultPadding),
 
-        // Donation Deaails Card
-        DonationDetails(),
-        SizedBox(height: defaultPadding),
+              // Donation Details Card
+              DonationDetails(),
+              const SizedBox(height: defaultPadding),
 
-        // Volunteer Details Card
-        _VolunteerDetails(
-          totalVolunteersNum: 350,
-          totalSepcNum: 15,
+              // Volunteer Details Card
+              const _VolunteerDetails(
+                totalVolunteersNum: 350,
+                totalSepcNum: 15,
+              ),
+              const SizedBox(height: defaultPadding),
+            ]),
+          ),
         ),
-        SizedBox(height: defaultPadding),
       ],
     );
   }
@@ -50,22 +58,22 @@ class _ActiveOperationDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(defaultPadding),
+      decoration: const BoxDecoration(
         color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             tr('active_operation'),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: defaultPadding),
+          const SizedBox(height: defaultPadding),
           Align(
             alignment: AlignmentDirectional.topCenter,
             child: SvgPicture.asset(
@@ -73,21 +81,21 @@ class _ActiveOperationDetails extends StatelessWidget {
               height: defaultPadding * 10,
             ),
           ),
-          SizedBox(height: defaultPadding),
+          const SizedBox(height: defaultPadding),
           DetailsInfoCard(
             svgSrc: "assets/icons/donation.svg",
             title: tr('donation_op'),
-            leading: Text('campaign').plural(30),
+            leading: const Text('campaign').plural(30),
           ),
           DetailsInfoCard(
             svgSrc: "assets/icons/ngo-people.svg",
             title: tr('volunteer_op'),
-            leading: Text('campaign').plural(9),
+            leading: const Text('campaign').plural(9),
           ),
           DetailsInfoCard(
             svgSrc: "assets/icons/sponsorships.svg",
             title: tr('sponsorship_op'),
-            leading: Text('sponsorship').plural(12),
+            leading: const Text('sponsorship').plural(12),
           ),
         ],
       ),
@@ -108,22 +116,22 @@ class _VolunteerDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(defaultPadding),
+      decoration: const BoxDecoration(
         color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             tr('volunteer_details'),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: defaultPadding),
+          const SizedBox(height: defaultPadding),
           Align(
             alignment: AlignmentDirectional.topCenter,
             child: SvgPicture.asset(
@@ -131,16 +139,16 @@ class _VolunteerDetails extends StatelessWidget {
               height: defaultPadding * 10,
             ),
           ),
-          SizedBox(height: defaultPadding),
+          const SizedBox(height: defaultPadding),
           DetailsInfoCard(
             title: tr('tot_vol_count'),
             svgSrc: 'assets/icons/menu_profile.svg',
-            leading: Text('volunteer_person').plural(totalVolunteersNum),
+            leading: const Text('volunteer_person').plural(totalVolunteersNum),
           ),
           DetailsInfoCard(
             title: tr('tot_vol_spe'),
             svgSrc: 'assets/icons/menu_doc.svg',
-            leading: Text('specializations').plural(totalSepcNum),
+            leading: const Text('specializations').plural(totalSepcNum),
           ),
         ],
       ),
