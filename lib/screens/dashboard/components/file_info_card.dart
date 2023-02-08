@@ -10,7 +10,7 @@ class FileInfoCard extends StatelessWidget {
     required this.info,
   }) : super(key: key);
 
-  final CloudStorageInfo info;
+  final AccountInfo info;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class FileInfoCard extends StatelessWidget {
             ],
           ),
           Text(
-            info.title!,
+            info.chain!,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

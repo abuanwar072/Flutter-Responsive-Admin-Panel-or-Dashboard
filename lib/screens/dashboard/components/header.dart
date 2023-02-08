@@ -22,13 +22,13 @@ class Header extends StatelessWidget {
           ),
         if (!Responsive.isMobile(context))
           Text(
-            "Dashboard",
+            "Turkey Earthquake Relief Accounts",
             style: Theme.of(context).textTheme.headline6,
           ),
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
-        Expanded(child: SearchField()),
-        ProfileCard()
+        //Expanded(child: SearchField()),
+        //ProfileCard()
       ],
     );
   }

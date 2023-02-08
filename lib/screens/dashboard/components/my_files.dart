@@ -19,9 +19,10 @@ class MyFiles extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "My Files",
+              "Validated Accounts",
               style: Theme.of(context).textTheme.subtitle1,
             ),
+            /*
             ElevatedButton.icon(
               style: TextButton.styleFrom(
                 padding: EdgeInsets.symmetric(
@@ -34,6 +35,7 @@ class MyFiles extends StatelessWidget {
               icon: Icon(Icons.add),
               label: Text("Add New"),
             ),
+            */
           ],
         ),
         SizedBox(height: defaultPadding),
