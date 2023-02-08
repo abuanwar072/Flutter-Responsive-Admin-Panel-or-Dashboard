@@ -1,5 +1,5 @@
 import 'package:admin/constants.dart';
-import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/controllers/MenuProvider.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:admin/services/firebase_manager.dart';
 import 'package:admin/services/relief_provider.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Admin Panel',
+      title: 'Turkey Earthquake Relief Panel',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: bgColor,
         textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme).apply(bodyColor: Colors.white),
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(
-            create: (context) => MenuController(),
+            create: (context) => MenuProvider(),
           ),
           ChangeNotifierProvider(
             create: (context) => ReliefProvider(),
