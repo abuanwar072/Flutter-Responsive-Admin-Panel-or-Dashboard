@@ -29,23 +29,28 @@ class BankAccountList extends StatelessWidget {
             width: double.infinity,
             height: 530,
             child: DataTable2(
-              columnSpacing: 0,
+              columnSpacing: defaultPadding,
               minWidth: 600,
               columns: [
-                DataColumn(
+                DataColumn2(
                   label: Text("Organization"),
+                  size: ColumnSize.S,
                 ),
-                DataColumn(
+                DataColumn2(
                   label: Text("Bank"),
+                  size: ColumnSize.M,
                 ),
-                DataColumn(
+                DataColumn2(
                   label: Text("IBAN"),
+                  size: ColumnSize.L,
                 ),
-                DataColumn(
+                DataColumn2(
                   label: Text("Currency"),
+                  size: ColumnSize.S,
                 ),
-                DataColumn(
+                DataColumn2(
                   label: Text("Swift Code"),
+                  size: ColumnSize.S,
                 ),
               ],
               rows: List.generate(
