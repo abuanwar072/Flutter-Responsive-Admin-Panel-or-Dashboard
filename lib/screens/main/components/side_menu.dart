@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vrouter/vrouter.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -17,12 +18,16 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Dashboard",
             svgSrc: "assets/icons/menu_dashbord.svg",
-            press: () {},
+            press: () {
+              context.vRouter.to('/dashboard');
+            },
           ),
           DrawerListTile(
-            title: "Transaction",
+            title: "Bank Accounts",
             svgSrc: "assets/icons/menu_tran.svg",
-            press: () {},
+            press: () {
+              context.vRouter.to('/bankaccounts');
+            },
           ),
         ],
       ),

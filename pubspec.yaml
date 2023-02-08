@@ -33,6 +33,7 @@ dependencies:
   http: ^0.13.5
   intl: ^0.18.0
   provider: ^6.0.5
+  vrouter: ^1.2.1
 
 dev_dependencies:
   flutter_test:

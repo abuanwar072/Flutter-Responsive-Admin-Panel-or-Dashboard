@@ -1,16 +1,23 @@
-import 'package:admin/controllers/MenuProvider.dart';
 import 'package:admin/responsive.dart';
-import 'package:admin/screens/dashboard/dashboard_screen.dart';
+import 'package:admin/screens/main/components/side_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 
-import 'components/side_menu.dart';
+class FullPage extends StatefulWidget {
+  final Widget? child;
 
-class MainScreen extends StatelessWidget {
+  const FullPage({Key? key, this.child}) : super(key: key);
+  
+  @override
+  State<FullPage> createState() => _FullPageState();
+}
+
+class _FullPageState extends State<FullPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: context.read<MenuProvider>().scaffoldKey,
       drawer: SideMenu(),
       body: SafeArea(
         child: Row(
@@ -26,7 +33,7 @@ class MainScreen extends StatelessWidget {
             Expanded(
               // It takes 5/6 part of the screen
               flex: 5,
-              child: DashboardScreen(),
+              child: widget.child ?? Placeholder(),
             ),
           ],
         ),
