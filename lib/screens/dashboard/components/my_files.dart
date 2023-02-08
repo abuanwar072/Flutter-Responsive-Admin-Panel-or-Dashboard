@@ -1,7 +1,8 @@
-
 import 'package:admin/responsive.dart';
+import 'package:admin/services/relief_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:admin/models/MyFiles.dart';
+import 'package:admin/models/AccounInfo.dart';
+import 'package:provider/provider.dart';
 import '../../../constants.dart';
 import 'file_info_card.dart';
 
@@ -66,17 +67,20 @@ class FileInfoCardGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ReliefProvider provider = context.watch<ReliefProvider>();
+    List<AccountInfo> accounts = provider.accounts;
+
     return GridView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: demoMyFiles.length,
+      itemCount: accounts.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: defaultPadding,
         mainAxisSpacing: defaultPadding,
         childAspectRatio: childAspectRatio,
       ),
-      itemBuilder: (context, index) => FileInfoCard(info: demoMyFiles[index]),
+      itemBuilder: (context, index) => FileInfoCard(account: accounts[index]),
     );
   }
 }

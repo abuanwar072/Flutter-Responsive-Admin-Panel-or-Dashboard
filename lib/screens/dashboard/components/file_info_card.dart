@@ -1,5 +1,7 @@
-import 'package:admin/models/MyFiles.dart';
+import 'package:admin/models/AccounInfo.dart';
+import 'package:admin/models/chain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../constants.dart';
@@ -7,10 +9,14 @@ import '../../../constants.dart';
 class FileInfoCard extends StatelessWidget {
   const FileInfoCard({
     Key? key,
-    required this.info,
+    required this.account,
   }) : super(key: key);
 
-  final AccountInfo info;
+  final AccountInfo account;
+
+  String hideAddress(String address) {
+    return address.substring(0, 6) + '...' + address.substring(address.length - 4, address.length);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,47 +34,58 @@ class FileInfoCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: EdgeInsets.all(defaultPadding * 0.75),
+                padding: EdgeInsets.all(defaultPadding * 0.6),
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                  color: info.color!.withOpacity(0.1),
+                  color: account.chain.color.withOpacity(0.1),
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
-                child: SvgPicture.asset(
-                  info.svgSrc!,
-                  color: info.color,
-                ),
+                child: SvgPicture.asset(account.chain.icon
+
+                    // color: info.color,
+                    ),
               ),
-              Icon(Icons.more_vert, color: Colors.white54)
+              IconButton(
+                onPressed: () async {
+                  ClipboardData data = ClipboardData(text: account.address);
+                  await Clipboard.setData(data);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('${account.chain.name} address to clipboard'),
+                    ),
+                  );
+                },
+                icon: Icon(
+                  Icons.copy,
+                  color: Colors.white54,
+                ),
+              )
             ],
           ),
           Text(
-            info.chain!,
+            account.chain.name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          ProgressLine(
-            color: info.color,
-            percentage: info.percentage,
+          Text(
+            hideAddress(account.address!),
+            style: Theme.of(context).textTheme.overline!.copyWith(
+                  color: Colors.white,
+                ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "${info.numOfFiles} Files",
-                style: Theme.of(context)
-                    .textTheme
-                    .caption!
-                    .copyWith(color: Colors.white70),
+                "${account.totalDonations} Donations",
+                style: Theme.of(context).textTheme.caption!.copyWith(color: Colors.white70),
               ),
-              Text(
-                info.totalStorage!,
-                style: Theme.of(context)
-                    .textTheme
-                    .caption!
-                    .copyWith(color: Colors.white),
-              ),
+              // Text(
+              //   info.totalStorage!,
+              //   style: Theme.of(context).textTheme.caption!.copyWith(color: Colors.white),
+              // ),
             ],
           )
         ],

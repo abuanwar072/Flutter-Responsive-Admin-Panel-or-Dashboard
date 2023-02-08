@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 import '../../../constants.dart';
 
@@ -8,11 +9,12 @@ class StorageInfoCard extends StatelessWidget {
     Key? key,
     required this.title,
     required this.svgSrc,
-    required this.amountOfFiles,
+    required this.totalAmountUSD,
     required this.numOfFiles,
   }) : super(key: key);
 
-  final String title, svgSrc, amountOfFiles;
+  final String title, svgSrc;
+  final double totalAmountUSD;
   final int numOfFiles;
 
   @override
@@ -45,17 +47,14 @@ class StorageInfoCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "$numOfFiles Files",
-                    style: Theme.of(context)
-                        .textTheme
-                        .caption!
-                        .copyWith(color: Colors.white70),
+                    "$numOfFiles Donations",
+                    style: Theme.of(context).textTheme.caption!.copyWith(color: Colors.white70),
                   ),
                 ],
               ),
             ),
           ),
-          Text(amountOfFiles)
+          Text(NumberFormat.simpleCurrency(name: 'USD', decimalDigits: 2).format(totalAmountUSD))
         ],
       ),
     );
