@@ -1,4 +1,4 @@
-import 'package:admin/models/MyFiles.dart';
+import 'package:admin/models/my_files.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -15,10 +15,10 @@ class FileInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(defaultPadding),
+      decoration: const BoxDecoration(
         color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +28,7 @@ class FileInfoCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: EdgeInsets.all(defaultPadding * 0.75),
+                padding: const EdgeInsets.all(defaultPadding * 0.75),
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
@@ -40,7 +40,7 @@ class FileInfoCard extends StatelessWidget {
                   color: info.color,
                 ),
               ),
-              Icon(Icons.more_vert, color: Colors.white54)
+              const Icon(Icons.more_vert, color: Colors.white54)
             ],
           ),
           Text(
@@ -56,17 +56,17 @@ class FileInfoCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "${info.numOfFiles} Files",
+                '${info.numOfFiles} Files',
                 style: Theme.of(context)
                     .textTheme
-                    .caption!
+                    .bodySmall!
                     .copyWith(color: Colors.white70),
               ),
               Text(
                 info.totalStorage!,
                 style: Theme.of(context)
                     .textTheme
-                    .caption!
+                    .bodySmall!
                     .copyWith(color: Colors.white),
               ),
             ],
@@ -96,7 +96,7 @@ class ProgressLine extends StatelessWidget {
           height: 5,
           decoration: BoxDecoration(
             color: color!.withOpacity(0.1),
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
         ),
         LayoutBuilder(
@@ -105,7 +105,7 @@ class ProgressLine extends StatelessWidget {
             height: 5,
             decoration: BoxDecoration(
               color: color,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
           ),
         ),

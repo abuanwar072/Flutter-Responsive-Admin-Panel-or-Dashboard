@@ -1,15 +1,17 @@
 import 'package:admin/constants.dart';
-import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/controllers/menu_controller.dart' as menu_controller;
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -25,10 +27,10 @@ class MyApp extends StatelessWidget {
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(
-            create: (context) => MenuController(),
+            create: (context) => menu_controller.MenuController(),
           ),
         ],
-        child: MainScreen(),
+        child: const MainScreen(),
       ),
     );
   }
