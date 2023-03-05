@@ -29,10 +29,11 @@ dependencies:
   cupertino_icons: ^1.0.3
 
   google_fonts: ^2.1.0
-  flutter_svg: ^0.22.0
-  fl_chart: ^0.36.1
-  provider: ^5.0.0
+  flutter_svg: ^1.0.0
+  fl_chart: ^0.40.5
+  provider: ^6.0.1
   data_table_2: ^2.0.3
+  adaptive_theme: ^2.3.0
 
 dev_dependencies:
   flutter_test:
