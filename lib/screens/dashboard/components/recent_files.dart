@@ -1,5 +1,5 @@
 import 'package:admin/models/RecentFile.dart';
-import 'package:data_table_2/data_table_2.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -23,7 +23,7 @@ class RecentFiles extends StatelessWidget {
         children: [
           Text(
             "Recent Files",
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           SizedBox(
             width: double.infinity,

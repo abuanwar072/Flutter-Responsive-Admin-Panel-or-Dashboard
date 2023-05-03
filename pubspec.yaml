@@ -32,7 +32,6 @@ dependencies:
   flutter_svg: ^2.0.5
   fl_chart: ^0.62.0
   provider: ^6.0.5
-  data_table_2: ^2.0.3
 
 dev_dependencies:
   flutter_test:
