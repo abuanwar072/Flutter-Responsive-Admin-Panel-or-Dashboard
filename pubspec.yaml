@@ -28,10 +28,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.3
 
-  google_fonts: ^2.1.0
-  flutter_svg: ^0.22.0
-  fl_chart: ^0.36.1
-  provider: ^5.0.0
+  google_fonts: ^4.0.4
+  flutter_svg: ^2.0.5
+  fl_chart: ^0.62.0
+  provider: ^6.0.5
   data_table_2: ^2.0.3
 
 dev_dependencies:
