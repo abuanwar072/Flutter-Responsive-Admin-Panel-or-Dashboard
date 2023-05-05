@@ -43,7 +43,31 @@ class RecentFiles extends StatelessWidget {
               ],
               rows: List.generate(
                 demoRecentFiles.length,
-                (index) => recentFileDataRow(demoRecentFiles[index]),
+                (index) {
+                  final RecentFile fileInfo = demoRecentFiles[index];
+                  return DataRow(
+                    cells: [
+                      DataCell(
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              fileInfo.icon!,
+                              height: 30,
+                              width: 30,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: defaultPadding),
+                              child: Text(fileInfo.title!),
+                            ),
+                          ],
+                        ),
+                      ),
+                      DataCell(Text(fileInfo.date!)),
+                      DataCell(Text(fileInfo.size!)),
+                    ],
+                  );
+                },
               ),
             ),
           ),
@@ -51,28 +75,4 @@ class RecentFiles extends StatelessWidget {
       ),
     );
   }
-}
-
-DataRow recentFileDataRow(RecentFile fileInfo) {
-  return DataRow(
-    cells: [
-      DataCell(
-        Row(
-          children: [
-            SvgPicture.asset(
-              fileInfo.icon!,
-              height: 30,
-              width: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Text(fileInfo.title!),
-            ),
-          ],
-        ),
-      ),
-      DataCell(Text(fileInfo.date!)),
-      DataCell(Text(fileInfo.size!)),
-    ],
-  );
 }

@@ -25,8 +25,7 @@ class Header extends StatelessWidget {
             "Dashboard",
             style: Theme.of(context).textTheme.titleLarge,
           ),
-        if (!Responsive.isMobile(context))
-          Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
+        Spacer(flex: 2),
         Expanded(child: SearchField()),
         ProfileCard()
       ],
@@ -58,12 +57,11 @@ class ProfileCard extends StatelessWidget {
             "assets/images/profile_pic.png",
             height: 38,
           ),
-          if (!Responsive.isMobile(context))
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-              child: Text("Angelina Jolie"),
-            ),
+          // Hide it on Mobile
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+            child: Text("Angelina Jolie"),
+          ),
           Icon(Icons.keyboard_arrow_down),
         ],
       ),
