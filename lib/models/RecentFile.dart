@@ -42,7 +42,7 @@ List demoRecentFiles = [
     size: "3.5mb",
   ),
   RecentFile(
-    icon: "assets/icons/excle_file.svg",
+    icon: "assets/icons/excel_file.svg",
     title: "Excel File",
     date: "25-02-2021",
     size: "34.5mb",
