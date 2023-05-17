@@ -1,4 +1,4 @@
-import 'package:admin/controllers/MenuAppController.dart';
+import 'package:admin/controllers/menu_app_controller.dart';
 import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -96,7 +96,7 @@ class SearchField extends StatelessWidget {
               color: primaryColor,
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-            child: SvgPicture.asset("assets/icons/Search.svg"),
+            child: SvgPicture.asset("assets/icons/search.svg"),
           ),
         ),
       ),
