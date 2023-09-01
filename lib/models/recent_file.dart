@@ -12,7 +12,7 @@ List demoRecentFiles = [
     size: "3.5mb",
   ),
   RecentFile(
-    icon: "assets/icons/Figma_file.svg",
+    icon: "assets/icons/figma_file.svg",
     title: "Figma File",
     date: "27-02-2021",
     size: "19.0mb",

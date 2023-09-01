@@ -30,7 +30,7 @@ class StorageDetails extends StatelessWidget {
           SizedBox(height: defaultPadding),
           Chart(),
           StorageInfoCard(
-            svgSrc: "assets/icons/Documents.svg",
+            svgSrc: "assets/icons/documents.svg",
             title: "Documents Files",
             amountOfFiles: "1.3GB",
             numOfFiles: 1328,
