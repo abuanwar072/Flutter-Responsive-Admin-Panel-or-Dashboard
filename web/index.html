@@ -31,169 +31,182 @@
     <link rel="manifest" href="manifest.json" />
     <!-- Styling for loading indicator -->
     <style>
-      @import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400&display=swap");
-
-      * {
-        box-sizing: border-box;
-      }
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-
       body {
-        font-family: "Roboto", sans-serif;
-        font-size: 1rem;
-        line-height: 1.5;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-        min-height: 100vh;
-        background: #fff;
-        overflow: hidden;
-      }
-
-      #container {
-        position: relative;
-        transform: scale(0.725);
-      }
-
-      .divider {
-        position: absolute;
-        z-index: 2;
-        top: 65px;
-        left: 200px;
-        width: 50px;
-        height: 15px;
-        background: #fff;
-      }
-
-      .loading-text {
-        position: relative;
-        font-size: 3.75rem;
-        font-weight: 300;
-        margin: 0;
-        white-space: nowrap;
-      }
-      .loading-text::before {
-        position: absolute;
-        content: "";
-        z-index: 1;
-        top: 40px;
-        left: 115px;
-        width: 6px;
-        height: 6px;
         background: #000;
-        border-radius: 50%;
-        animation: dotMove 1800ms cubic-bezier(0.25, 0.25, 0.75, 0.75) infinite;
       }
-      .loading-text .letter {
-        display: inline-block;
-        position: relative;
-        color: #000;
-        letter-spacing: 8px;
-      }
-      .loading-text .letter:nth-child(1) {
-        transform-origin: 100% 70%;
-        transform: scale(1, 1.275);
-      }
-      .loading-text .letter:nth-child(1)::before {
+
+      #load {
         position: absolute;
-        content: "";
-        top: 22px;
-        left: 0;
-        width: 14px;
+        width: 600px;
         height: 36px;
-        background: #fff;
-        transform-origin: 100% 0;
-        animation: lineStretch 1800ms cubic-bezier(0.25, 0.25, 0.75, 0.75)
-          infinite;
+        left: 50%;
+        top: 40%;
+        margin-left: -300px;
+        overflow: visible;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: default;
       }
-      .loading-text .letter:nth-child(5) {
-        transform-origin: 100% 70%;
-        animation: letterStretch 1800ms cubic-bezier(0.25, 0.23, 0.73, 0.75)
-          infinite;
-      }
-      .loading-text .letter:nth-child(5)::before {
+
+      #load div {
         position: absolute;
-        content: "";
-        top: 15px;
-        left: 2px;
-        width: 9px;
-        height: 15px;
-        background: #fff;
+        width: 20px;
+        height: 36px;
+        opacity: 0;
+        font-family: Helvetica, Arial, sans-serif;
+        animation: move 2s linear infinite;
+        -o-animation: move 2s linear infinite;
+        -moz-animation: move 2s linear infinite;
+        -webkit-animation: move 2s linear infinite;
+        transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        color: #35c4f0;
       }
 
-      @keyframes dotMove {
-        0%,
+      #load div:nth-child(2) {
+        animation-delay: 0.2s;
+        -o-animation-delay: 0.2s;
+        -moz-animation-delay: 0.2s;
+        -webkit-animation-delay: 0.2s;
+      }
+      #load div:nth-child(3) {
+        animation-delay: 0.4s;
+        -o-animation-delay: 0.4s;
+        -webkit-animation-delay: 0.4s;
+        -webkit-animation-delay: 0.4s;
+      }
+      #load div:nth-child(4) {
+        animation-delay: 0.6s;
+        -o-animation-delay: 0.6s;
+        -moz-animation-delay: 0.6s;
+        -webkit-animation-delay: 0.6s;
+      }
+      #load div:nth-child(5) {
+        animation-delay: 0.8s;
+        -o-animation-delay: 0.8s;
+        -moz-animation-delay: 0.8s;
+        -webkit-animation-delay: 0.8s;
+      }
+      #load div:nth-child(6) {
+        animation-delay: 1s;
+        -o-animation-delay: 1s;
+        -moz-animation-delay: 1s;
+        -webkit-animation-delay: 1s;
+      }
+      #load div:nth-child(7) {
+        animation-delay: 1.2s;
+        -o-animation-delay: 1.2s;
+        -moz-animation-delay: 1.2s;
+        -webkit-animation-delay: 1.2s;
+      }
+
+      @keyframes move {
+        0% {
+          left: 0;
+          opacity: 0;
+        }
+        35% {
+          left: 41%;
+          -moz-transform: rotate(0deg);
+          -webkit-transform: rotate(0deg);
+          -o-transform: rotate(0deg);
+          transform: rotate(0deg);
+          opacity: 1;
+        }
+        65% {
+          left: 59%;
+          -moz-transform: rotate(0deg);
+          -webkit-transform: rotate(0deg);
+          -o-transform: rotate(0deg);
+          transform: rotate(0deg);
+          opacity: 1;
+        }
         100% {
-          transform: rotate(180deg) translate(-110px, -10px) rotate(-180deg);
-        }
-        50% {
-          transform: rotate(0deg) translate(-111px, 10px) rotate(0deg);
+          left: 100%;
+          -moz-transform: rotate(-180deg);
+          -webkit-transform: rotate(-180deg);
+          -o-transform: rotate(-180deg);
+          transform: rotate(-180deg);
+          opacity: 0;
         }
       }
 
-      @keyframes letterStretch {
-        0%,
+      @-moz-keyframes move {
+        0% {
+          left: 0;
+          opacity: 0;
+        }
+        35% {
+          left: 41%;
+          -moz-transform: rotate(0deg);
+          transform: rotate(0deg);
+          opacity: 1;
+        }
+        65% {
+          left: 59%;
+          -moz-transform: rotate(0deg);
+          transform: rotate(0deg);
+          opacity: 1;
+        }
         100% {
-          transform: scale(1, 0.35);
-          transform-origin: 100% 75%;
-        }
-        8%,
-        28% {
-          transform: scale(1, 2.125);
-          transform-origin: 100% 67%;
-        }
-        37% {
-          transform: scale(1, 0.875);
-          transform-origin: 100% 75%;
-        }
-        46% {
-          transform: scale(1, 1.03);
-          transform-origin: 100% 75%;
-        }
-        50%,
-        97% {
-          transform: scale(1);
-          transform-origin: 100% 75%;
+          left: 100%;
+          -moz-transform: rotate(-180deg);
+          transform: rotate(-180deg);
+          opacity: 0;
         }
       }
 
-      @keyframes lineStretch {
-        0%,
-        45%,
-        70%,
+      @-webkit-keyframes move {
+        0% {
+          left: 0;
+          opacity: 0;
+        }
+        35% {
+          left: 41%;
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+          opacity: 1;
+        }
+        65% {
+          left: 59%;
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+          opacity: 1;
+        }
         100% {
-          transform: scaleY(0.125);
-        }
-        49% {
-          transform: scaleY(0.75);
-        }
-        50% {
-          transform: scaleY(0.875);
-        }
-        53% {
-          transform: scaleY(0.5);
-        }
-        60% {
-          transform: scaleY(0);
-        }
-        68% {
-          transform: scaleY(0.18);
+          left: 100%;
+          -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg);
+          opacity: 0;
         }
       }
 
-      @media (min-width: 48rem) {
-        #container {
-          transform: scale(0.725rem);
+      @-o-keyframes move {
+        0% {
+          left: 0;
+          opacity: 0;
         }
-      }
-
-      @media (min-width: 62rem) {
-        #container {
-          transform: scale(0.85);
+        35% {
+          left: 41%;
+          -o-transform: rotate(0deg);
+          transform: rotate(0deg);
+          opacity: 1;
+        }
+        65% {
+          left: 59%;
+          -o-transform: rotate(0deg);
+          transform: rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          left: 100%;
+          -o-transform: rotate(-180deg);
+          transform: rotate(-180deg);
+          opacity: 0;
         }
       }
     </style>
@@ -201,16 +214,14 @@
 
   <body>
     <!-- Loading Indicator -->
-    <div class="loading">
-      <div class="loading-text">
-        <span class="loading-text-words">L</span>
-        <span class="loading-text-words">O</span>
-        <span class="loading-text-words">A</span>
-        <span class="loading-text-words">D</span>
-        <span class="loading-text-words">I</span>
-        <span class="loading-text-words">N</span>
-        <span class="loading-text-words">G</span>
-      </div>
+    <div id="load">
+      <div>G</div>
+      <div>N</div>
+      <div>I</div>
+      <div>D</div>
+      <div>A</div>
+      <div>O</div>
+      <div>L</div>
     </div>
     <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
