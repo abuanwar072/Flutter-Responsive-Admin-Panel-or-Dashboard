@@ -6,7 +6,9 @@ I've created a step-by-step video tutorial to guide you through the process of b
 
 ### Checkout [Serverpod.dev](https://cutt.ly/Per1Z7ri) - The Flutter Backend
 
-Flutter V2.\* has officially introduced web support on its stable branch. Today, I'm excited to present a Flutter-based Admin panel, often referred to as a dashboard UI. This Flutter dashboard template, which you can find on GitHub, is a comprehensive solution for your app's backend needs. It comes with a wide array of features including charts, tables, and neatly designed info cards.
+Here is the updated V2.0 of the **Flutter Admin Dashboard Template.** This fully responsive admin template runs seamlessly on web, tablet, and mobile. We are continuously working on it, and it will soon include more than 20 pages, covering all the essentials you need for a complete dashboard.
+
+This Flutter dashboard template, which you can find on GitHub, is a comprehensive solution for your app's backend needs. It comes with a wide array of features including charts, tables, and neatly designed info cards.
 
 This flutter dashboard library is versatile; it's tailored to work seamlessly on the Web, macOS app, tablets, and both Android and iOS phones. The principle 'code once, run everywhere' truly comes to life with this.
 
@@ -14,14 +16,17 @@ This flutter dashboard library is versatile; it's tailored to work seamlessly on
 
 - flutter_svg: [link](https://pub.dev/packages/flutter_svg)
 - google_fonts: [link](https://pub.dev/packages/google_fonts)
-- provider: [link](https://pub.dev/packages/provider)
 
-**Fonts**
+### Responsive Admin Dashboard Panel Preview
 
-- Poppins [link](https://fonts.google.com/specimen/Poppins)
+Responsive Demo - Web, Tablet, and Mobile
+![Responsive Demo](/Previews/Core_Dashboard_V2_Intro.gif)
 
-### Responsive Admin Panel or Dashboard Final UI Preview
+Dashboard Page
+![Dashboard Page](/Previews/dashboard.png)
 
-![Preview](/gif.gif)
+Sign up Page
+![Sign up Page](/Previews/sign_up.png)
 
-![App UI](/ui.png)
+Login Page
+![Login Page](/Previews/sign_in.png)
